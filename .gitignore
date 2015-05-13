@@ -1,0 +1,10 @@
+*.cogui
+*.comarker
+*.ld
+*.o
+a.out
+*.elf
+*.hex
+*.map
+*.bin
+*.xml
