@@ -76,9 +76,9 @@
   <LocalComponents/>
   <Files>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_pccard.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_pccard.h" type="1"/>
-    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_cortex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_cortex.h" type="1"/>
-    <File name="lib/STM32CubeF4/BSP/stm32f4_discovery_accelerometer.c" path="../../../lib/STM32CubeF4/BSP/STM32F4-Discovery/stm32f4_discovery_accelerometer.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_flash.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_flash.h" type="1"/>
+    <File name="lib/STM32CubeF4/BSP/stm32f4_discovery_accelerometer.c" path="../../../lib/STM32CubeF4/BSP/STM32F4-Discovery/stm32f4_discovery_accelerometer.c" type="1"/>
+    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_cortex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_cortex.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_wwdg.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_wwdg.c" type="1"/>
     <File name="src/motor.c" path="../src/motor.c" type="1"/>
     <File name="lib/STM32CubeF4/CMSIS/Core" path="" type="2"/>
@@ -119,19 +119,20 @@
     <File name="src/stm32f4xx_hal_conf.h" path="../src/stm32f4xx_hal_conf.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_rtc_ex.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_rtc_ex.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_tim_ex.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_tim_ex.c" type="1"/>
-    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_spdifrx.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_spdifrx.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_pcd_ex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_pcd_ex.h" type="1"/>
+    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_spdifrx.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_spdifrx.h" type="1"/>
     <File name="lib/STM32CubeF4/CMSIS/Device/inc/stm32f415xx.h" path="../../../lib/STM32CubeF4/CMSIS/Device/inc/stm32f415xx.h" type="1"/>
-    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_fmpi2c_ex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_fmpi2c_ex.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_dcmi.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_dcmi.c" type="1"/>
-    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_hash_ex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_hash_ex.h" type="1"/>
+    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_fmpi2c_ex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_fmpi2c_ex.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_rtc.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_rtc.h" type="1"/>
+    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_hash_ex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_hash_ex.h" type="1"/>
     <File name="lib/STM32CubeF4" path="" type="2"/>
-    <File name="src/startup_stm32f4xx.c" path="../src/startup_stm32f4xx.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_iwdg.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_iwdg.h" type="1"/>
+    <File name="src/startup_stm32f4xx.c" path="../src/startup_stm32f4xx.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_rng.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_rng.c" type="1"/>
-    <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_flash_ramfunc.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_flash_ramfunc.c" type="1"/>
+    <File name="src/gp2.h" path="../src/gp2.h" type="1"/>
     <File name="lib/aversive--/inc/device.hpp" path="../../../lib/aversive--/include/device/device.hpp" type="1"/>
+    <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_flash_ramfunc.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_flash_ramfunc.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_dac_ex.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_dac_ex.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_crc.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_crc.h" type="1"/>
     <File name="lib/aversive--/inc/kalman_filter.hpp" path="../../../lib/aversive--/include/filter/kalman_filter.hpp" type="1"/>
@@ -153,12 +154,12 @@
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_fmpi2c.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_fmpi2c.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_pcd.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_pcd.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_sai_ex.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_sai_ex.c" type="1"/>
-    <File name="src/syscalls.c" path="../src/syscalls.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_i2s.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_i2s.c" type="1"/>
+    <File name="src/syscalls.c" path="../src/syscalls.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_adc.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_adc.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_uart.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_uart.h" type="1"/>
-    <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_ltdc.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_ltdc.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_irda.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_irda.c" type="1"/>
+    <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_ltdc.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_ltdc.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_sdram.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_sdram.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_eth.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_eth.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_spi.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_spi.h" type="1"/>
@@ -168,12 +169,12 @@
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_sai.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_sai.h" type="1"/>
     <File name="lib/aversive--/inc/diff_filter.hpp" path="../../../lib/aversive--/include/filter/diff_filter.hpp" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_cortex.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_cortex.c" type="1"/>
-    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_fmpi2c.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_fmpi2c.h" type="1"/>
     <File name="lib/STM32CubeF4/CMSIS/Device/inc" path="" type="2"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_gpio.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_gpio.c" type="1"/>
+    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_fmpi2c.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_fmpi2c.h" type="1"/>
     <File name="src/scheduler.c" path="../src/scheduler.c" type="1"/>
-    <File name="lib/STM32CubeF4/CMSIS/Device/inc/stm32f411xe.h" path="../../../lib/STM32CubeF4/CMSIS/Device/inc/stm32f411xe.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_pwr.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_pwr.h" type="1"/>
+    <File name="lib/STM32CubeF4/CMSIS/Device/inc/stm32f411xe.h" path="../../../lib/STM32CubeF4/CMSIS/Device/inc/stm32f411xe.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_cryp_ex.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_cryp_ex.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_pcd.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_pcd.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_cryp_ex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_cryp_ex.h" type="1"/>
@@ -187,14 +188,14 @@
     <File name="lib/aversive--/src" path="" type="2"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_i2c.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_i2c.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_pccard.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_pccard.c" type="1"/>
-    <File name="lib/STM32CubeF4/CMSIS/Device/inc/stm32f427xx.h" path="../../../lib/STM32CubeF4/CMSIS/Device/inc/stm32f427xx.h" type="1"/>
     <File name="src/encoder.c" path="../src/encoder.c" type="1"/>
+    <File name="lib/STM32CubeF4/CMSIS/Device/inc/stm32f427xx.h" path="../../../lib/STM32CubeF4/CMSIS/Device/inc/stm32f427xx.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal.h" type="1"/>
     <File name="lib/aversive--/inc/aversive.hpp" path="../../../lib/aversive--/include/aversive.hpp" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_dma.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_dma.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_sai_ex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_sai_ex.h" type="1"/>
-    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_gpio_ex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_gpio_ex.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_i2s_ex.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_i2s_ex.c" type="1"/>
+    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_gpio_ex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_gpio_ex.h" type="1"/>
     <File name="lib/STM32CubeF4/BSP" path="" type="2"/>
     <File name="lib/STM32CubeF4/CMSIS/Device/inc/stm32f439xx.h" path="../../../lib/STM32CubeF4/CMSIS/Device/inc/stm32f439xx.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_qspi.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_qspi.h" type="1"/>
@@ -205,12 +206,13 @@
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_i2c_ex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_i2c_ex.h" type="1"/>
     <File name="lib/aversive--" path="" type="2"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_qspi.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_qspi.c" type="1"/>
+    <File name="src/gp2.c" path="../src/gp2.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_nor.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_nor.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_conf_template.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_conf_template.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_sram.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_sram.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_hash.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_hash.h" type="1"/>
-    <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_adc.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_adc.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_pwr.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_pwr.c" type="1"/>
+    <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_adc.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_adc.c" type="1"/>
     <File name="lib/STM32CubeF4/CMSIS/Core/core_cm3.h" path="../../../lib/STM32CubeF4/CMSIS/Core/core_cm3.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_smartcard.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_smartcard.h" type="1"/>
     <File name="lib/STM32CubeF4/CMSIS/Core/core_sc300.h" path="../../../lib/STM32CubeF4/CMSIS/Core/core_sc300.h" type="1"/>
@@ -228,12 +230,12 @@
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_flash_ex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_flash_ex.h" type="1"/>
     <File name="lib/aversive--/src/pid_filter.cpp" path="../../../lib/aversive--/src/pid_filter.cpp" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_rcc.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_rcc.h" type="1"/>
-    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_tim.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_tim.h" type="1"/>
     <File name="src/init.c" path="../src/init.c" type="1"/>
+    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_tim.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_tim.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_flash_ramfunc.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_flash_ramfunc.h" type="1"/>
     <File name="src/uart.h" path="../src/uart.h" type="1"/>
-    <File name="lib/STM32CubeF4/CMSIS/Core/core_cmFunc.h" path="../../../lib/STM32CubeF4/CMSIS/Core/core_cmFunc.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_dac_ex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_dac_ex.h" type="1"/>
+    <File name="lib/STM32CubeF4/CMSIS/Core/core_cmFunc.h" path="../../../lib/STM32CubeF4/CMSIS/Core/core_cmFunc.h" type="1"/>
     <File name="lib/aversive--/inc/output.hpp" path="../../../lib/aversive--/include/device/output.hpp" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_rtc_ex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_rtc_ex.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_flash_ex.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_flash_ex.c" type="1"/>
@@ -242,8 +244,8 @@
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_gpio.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_gpio.h" type="1"/>
     <File name="lib/aversive--/inc/feedback_loop_filter.hpp" path="../../../lib/aversive--/include/filter/feedback_loop_filter.hpp" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_tim_ex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_tim_ex.h" type="1"/>
-    <File name="lib/STM32CubeF4/CMSIS/Device/inc/stm32f401xe.h" path="../../../lib/STM32CubeF4/CMSIS/Device/inc/stm32f401xe.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_sd.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_sd.c" type="1"/>
+    <File name="lib/STM32CubeF4/CMSIS/Device/inc/stm32f401xe.h" path="../../../lib/STM32CubeF4/CMSIS/Device/inc/stm32f401xe.h" type="1"/>
     <File name="lib/STM32CubeF4/CMSIS/Core/core_cmSimd.h" path="../../../lib/STM32CubeF4/CMSIS/Core/core_cmSimd.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_uart.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_uart.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_rcc.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_rcc.c" type="1"/>
@@ -266,8 +268,8 @@
     <File name="lib/aversive--/src/diff_filter.cpp" path="../../../lib/aversive--/src/diff_filter.cpp" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src" path="" type="2"/>
     <File name="lib/aversive--/inc/robot_controller.hpp" path="../../../lib/aversive--/include/device/controller/robot_controller.hpp" type="1"/>
-    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_i2s_ex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_i2s_ex.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_smartcard.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_smartcard.c" type="1"/>
+    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_i2s_ex.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_i2s_ex.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_i2s.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_i2s.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal.c" type="1"/>
     <File name="lib/STM32CubeF4/CMSIS/Core/arm_common_tables.h" path="../../../lib/STM32CubeF4/CMSIS/Core/arm_common_tables.h" type="1"/>
@@ -278,8 +280,8 @@
     <File name="lib/STM32CubeF4/CMSIS/Device/src/system_stm32f4xx.c" path="../../../lib/STM32CubeF4/CMSIS/Device/src/system_stm32f4xx.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_hal_spi.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_hal_spi.c" type="1"/>
     <File name="lib/STM32CubeF4/HAL/src/stm32f4xx_ll_usb.c" path="../../../lib/STM32CubeF4/HAL/src/stm32f4xx_ll_usb.c" type="1"/>
-    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_i2c.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_i2c.h" type="1"/>
     <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_def.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_def.h" type="1"/>
+    <File name="lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_i2c.h" path="../../../lib/STM32CubeF4/HAL/inc/stm32f4xx_hal_i2c.h" type="1"/>
     <File name="src/encoder.h" path="../src/encoder.h" type="1"/>
     <File name="lib/aversive--/inc/filter.hpp" path="../../../lib/aversive--/include/filter/filter.hpp" type="1"/>
     <File name="lib/STM32CubeF4/CMSIS/Core/core_cm4.h" path="../../../lib/STM32CubeF4/CMSIS/Core/core_cm4.h" type="1"/>

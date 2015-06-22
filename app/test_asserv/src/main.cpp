@@ -8,6 +8,7 @@ extern "C" {
 #include "motor.h"
 #include "uart.h"
 #include "scheduler.h"
+#include "gp2.h"
 
 }
 
@@ -61,20 +62,36 @@ public:
 
 class LMotor: public Output<s32> {
 public:
+	bool lock = false;
+
 	LMotor(void) {}
 
 	void setValue(s32 val) {
-		motor1_set_value(val);
+		if(lock) {
+			motor1_set_value(0);
+		}
+		else {
+			motor1_set_value(val);
+		}
 	}
 };
 
 class RMotor: public Output<s32> {
 public:
+	bool lock = false;
+
 	RMotor(void) {}
 
 	void setValue(s32 val) {
-		motor2_set_value(val);
+		if(lock) {
+			motor2_set_value(0);
+		}
+		else {
+			motor2_set_value(val);
+		}
 	}
+
+
 };
 
 
@@ -112,16 +129,16 @@ void asserv_tick(void) {
 }
 
 void odo_tick(void) {
-    dist = (s32)((s32)enc_l.getValue() + (s32)enc_r.getValue());
-    angle = (s32)(enc_r.getValue() - enc_l.getValue());
+    dist = (s32)((s32)enc_l.getValue() + 1.2*(s32)enc_r.getValue());
+    angle = (s32)(1.2*enc_r.getValue() - enc_l.getValue());
 }
 
 s32 get_dist(void) {
-	return dist;
+	return dist * 0.55;
 }
 
 s32 get_angle(void) {
-	return (angle * 62) / 100;
+	return angle * 0.7;
 }
 
 s32 deg2angle(s32 deg) {
@@ -130,13 +147,16 @@ s32 deg2angle(s32 deg) {
 
 s32 cmd_a = 0;
 s32 cmd_d = 0;
+bool lock = false;
 
 void asserv_ad_tick(void) {
-    s32 corr_a = pid_a.doFilter(qramp_a.doFilter(cmd_a) - get_angle());
-    s32 corr_d = pid_d.doFilter(qramp_d.doFilter(cmd_d) - get_dist());
+	if(!lock) {
+		s32 corr_a = pid_a.doFilter(qramp_a.doFilter(cmd_a) - get_angle());
+		s32 corr_d = pid_d.doFilter(qramp_d.doFilter(cmd_d) - get_dist());
 
-    cmd_l = corr_d - corr_a/2;
-    cmd_r = corr_d + corr_a/2;
+		cmd_l = corr_d - corr_a/2;
+		cmd_r = corr_d + corr_a/2;
+	}
 }
 
 
@@ -154,15 +174,15 @@ int main(void) {
 	pid_l.setOutShift(4);
 
 	pid_r.setGains(135, 0, 0);
-	pid_r.setMaxIntegral(1500);
+	pid_r.setMaxIntegral(0);
 	pid_r.setOutShift(4);
 
 	//// Angle-Dist
-	qramp_a.setFirstOrderLimit(deg2angle(45),deg2angle(45));
-	qramp_a.setSecondOrderLimit(10000,10000);
+	qramp_a.setFirstOrderLimit(200,200);
+	qramp_a.setSecondOrderLimit(100,100);
 
-	qramp_d.setFirstOrderLimit(100,100);
-	qramp_d.setSecondOrderLimit(50, 50);
+	qramp_d.setFirstOrderLimit(50,50);
+	qramp_d.setSecondOrderLimit(10, 10);
 
 	pid_a.setGains(200, 1, 0);
 	pid_a.setMaxIntegral(40000);
@@ -178,7 +198,8 @@ int main(void) {
 	encoder1_init();
 	encoder2_init();
 	motor_init();
-	uart_init(330); // 9600 baud ?!?
+	//uart_init(330); // 9600 baud ?!?
+	gp2_init();
 
 
 
@@ -189,8 +210,31 @@ int main(void) {
 
 	//int count = 0;
 	//char c = 0;
-	cmd_d = 20000;
+	//cmd_d = 20000;
+	uint32_t rf = 0;
+	uint32_t lf = 0;
+	uint32_t rb = 0;
+	uint32_t lb = 0;
+
+	//cmd_a = deg2angle(90);
+	cmd_d = 100000;
 	while(1) {
+
+		rf = gp2_get_rf();
+		lf = gp2_get_lf();
+		rb = gp2_get_rb();
+		lb = gp2_get_lb();
+
+		if(rf > 2500 || rb > 2500 || lb > 2500) {
+			mot_l.lock = true;
+			mot_r.lock = true;
+			lock = true;
+		}
+		else {
+			mot_l.lock = false;
+			mot_r.lock = false;
+			lock = false;
+		}
 
 		//short enc1 = encoder1_get_value_short();
 		//short enc2 = encoder2_get_value_short();
