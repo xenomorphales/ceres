@@ -1,10 +1,16 @@
-(module Fuse (layer F.Cu) (tedit 5605D4AD)
+(module Fuse (layer F.Cu) (tedit 56166869)
   (fp_text reference REF** (at 0 3.04) (layer F.SilkS) hide
     (effects (font (size 1 1) (thickness 0.15)))
   )
   (fp_text value Fuse (at 0 -3.04) (layer F.Fab) hide
     (effects (font (size 1 1) (thickness 0.15)))
   )
+  (fp_line (start 11.35 2) (end 11.35 4.5) (layer F.SilkS) (width 0.15))
+  (fp_line (start 11.35 -4.5) (end 11.35 -2) (layer F.SilkS) (width 0.15))
+  (fp_line (start -11.35 2) (end -11.35 4.5) (layer F.SilkS) (width 0.15))
+  (fp_line (start -11.35 -4.5) (end -11.35 -2) (layer F.SilkS) (width 0.15))
+  (fp_line (start -11.35 4.5) (end 11.35 4.5) (layer F.SilkS) (width 0.15))
+  (fp_line (start -11.35 -4.5) (end 11.35 -4.5) (layer F.SilkS) (width 0.15))
   (pad 1 thru_hole circle (at -11.3 0) (size 3 3) (drill 1.5) (layers *.Cu *.Mask F.SilkS))
   (pad 2 thru_hole circle (at 11.3 0) (size 3 3) (drill 1.5) (layers *.Cu *.Mask F.SilkS))
 )
