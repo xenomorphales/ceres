@@ -5,7 +5,7 @@
     (no_connects 0)
     (area 105.275 61.775 191.575 148.075)
     (thickness 1.6)
-    (drawings 4)
+    (drawings 5)
     (tracks 1367)
     (zones 0)
     (modules 102)
@@ -1960,6 +1960,9 @@
       (net 2 /Com/+5V))
   )
 
+  (gr_text "Hermes board v1\n\nXenomorphales" (at 148.5 77.06) (layer F.SilkS)
+    (effects (font (size 1.5 1.5) (thickness 0.3)))
+  )
   (gr_line (start 108.5 145) (end 108.5 65) (angle 90) (layer Edge.Cuts) (width 0.1))
   (gr_line (start 188.5 145) (end 108.5 145) (angle 90) (layer Edge.Cuts) (width 0.1))
   (gr_line (start 188.5 65) (end 188.5 145) (angle 90) (layer Edge.Cuts) (width 0.1))
