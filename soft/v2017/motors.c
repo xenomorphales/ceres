@@ -4,7 +4,7 @@
 #define MODE        PWM_LEFT
 #define FREQU       (1000U)
 #define MAX_PWM     (256U)
-#define MIN_PWM     (60U)
+#define MIN_PWM     (80U)
 
 #define MOT_PWM   PWM_DEV(0)
 
@@ -16,9 +16,11 @@
 #define MOT2_DIR1 GPIO_PIN(PB, 3)
 #define MOT2_DIR2 GPIO_PIN(PB, 22)
 
+#define MIN(a, b) ((a > b) ? b : a)
+
 static inline void _pwm_set(pwm_t dev, uint8_t chan, uint16_t val) {
-  if(val > MIN_PWM) {
-    pwm_set(dev, chan, val);
+  if(val > 5) {
+    pwm_set(dev, chan, MIN(val+MIN_PWM, MAX_PWM));
   }
   else {
     pwm_set(dev, chan, 0);
