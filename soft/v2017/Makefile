@@ -8,5 +8,7 @@ FEATURES_REQUIRED += periph_pwm
 FEATURES_REQUIRED += periph_i2c
 
 USEMODULE += l3g4200d
+USEMODULE += feetech
+USEMODULE += dynamixel
 
 include $(RIOTBASE)/Makefile.include

@@ -12,7 +12,7 @@ int main(void) {
     const int a = gyro_get_angle_deg();
     printf("angle: %6i\n", a);
 
-    int cmd_a = -90;
+    int cmd_a = 0;
     int err_a = cmd_a-a;
 
     int cmd_d = 0;
