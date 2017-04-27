@@ -7,13 +7,25 @@
 #include "feetech.h"
 #include "dynamixel.h"
 
+#define MOVE (0)
+#define ARM (!MOVE)
+
+#if ARM
 uint16_t state[3][5] = {
-  {323, 87, 512, 270, 130},
-  {512, 512, 512, 270, 130},
-  {512, 512, 75, 270, 130},
+  {256,  80, 512, 270, 130}, // RETRACTED
+  {512, 512, 512, 270, 130}, // DEPLOYED MIDDLE
+  {512, 512, 100, 270, 130}, // DEPLOYED DOWN
 };
 
+uint16_t state2[3][5] = {
+  {256,  80, 512, 270, 150}, // RETRACTED
+  {512, 512, 512, 270, 150}, // DEPLOYED MIDDLE
+  {512, 512, 100, 270, 150}, // DEPLOYED DOWN
+};
+#endif
+
 int main(void) {
+#if ARM
   uint8_t buffer[64];
   uart_half_duplex_t stream;
   
@@ -58,7 +70,17 @@ int main(void) {
       feetech_init(&dev, &stream, i);
       
       feetech_write8(&dev, SCS15_TORQUE_ENABLE, 1);
+      feetech_write16(&dev, SCS15_GOAL_TIME, 512);
       feetech_write16(&dev, SCS15_GOAL_POSITION, state[curstate][i-10]);
+    }
+    
+    for(int i = 20 ; i < 25 ; i++) {
+      feetech_t dev;
+      feetech_init(&dev, &stream, i);
+      
+      feetech_write8(&dev, SCS15_TORQUE_ENABLE, 1);
+      feetech_write16(&dev, SCS15_GOAL_TIME, 512);
+      feetech_write16(&dev, SCS15_GOAL_POSITION, state2[curstate][i-20]);
     }
     
     for(int i = 15 ; i < 17 ; i++) {
@@ -66,8 +88,9 @@ int main(void) {
       dynamixel_init(&dev, &stream, i);
     }
   }
-  
-  /*
+#endif
+
+#if MOVE
   printf("motors_init : %i\n", motors_init());
   printf("gyro_init : %i\n", gyro_init());
 
@@ -78,13 +101,13 @@ int main(void) {
     int cmd_a = 0;
     int err_a = cmd_a-a;
 
-    int cmd_d = 0;
+    int cmd_d = 80;
     int err_d = cmd_d;
 
     motors_set_left(err_d + err_a);
     motors_set_right(err_d - err_a);
   }
-  */
+#endif
 
   return 0;
 }
