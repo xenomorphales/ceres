@@ -4,6 +4,7 @@
 typedef enum {
   ARM_RETRACTED,
   ARM_DEPLOYED,
+  ARM_MOVING,
   ARM_ERROR
 } arm_state_t;
 
