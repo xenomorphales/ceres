@@ -1,0 +1,569 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:v2017-cache
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 21
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Sheet
+S 9100 700  550  400 
+U 58FCABE6
+F0 "GP2_1" 60
+F1 "GP2.sch" 60
+F2 "+5V" I L 9100 800 60 
+F3 "GND" I L 9100 900 60 
+F4 "Signal" O L 9100 1000 60 
+$EndSheet
+$Sheet
+S 9100 1300 550  400 
+U 58FCB1A0
+F0 "GP2_2" 60
+F1 "GP2.sch" 60
+F2 "+5V" I L 9100 1400 60 
+F3 "GND" I L 9100 1500 60 
+F4 "Signal" O L 9100 1600 60 
+$EndSheet
+$Sheet
+S 9100 1900 550  400 
+U 58FCB55F
+F0 "GP2_3" 60
+F1 "GP2.sch" 60
+F2 "+5V" I L 9100 2000 60 
+F3 "GND" I L 9100 2100 60 
+F4 "Signal" O L 9100 2200 60 
+$EndSheet
+$Sheet
+S 9100 2500 550  400 
+U 58FCB564
+F0 "GP2_4" 60
+F1 "GP2.sch" 60
+F2 "+5V" I L 9100 2600 60 
+F3 "GND" I L 9100 2700 60 
+F4 "Signal" O L 9100 2800 60 
+$EndSheet
+$Sheet
+S 2050 700  550  500 
+U 58FCB631
+F0 "Ultrasonic_1" 60
+F1 "Ultrasonic.sch" 60
+F2 "+5V" I R 2600 800 60 
+F3 "GND" I R 2600 900 60 
+F4 "Trigger" I R 2600 1000 60 
+F5 "Echo" O R 2600 1100 60 
+$EndSheet
+$Sheet
+S 2050 1400 550  500 
+U 58FCCE91
+F0 "Ultrasonic_2" 60
+F1 "Ultrasonic.sch" 60
+F2 "+5V" I R 2600 1500 60 
+F3 "GND" I R 2600 1600 60 
+F4 "Trigger" I R 2600 1700 60 
+F5 "Echo" O R 2600 1800 60 
+$EndSheet
+$Sheet
+S 2050 2100 550  500 
+U 58FCD707
+F0 "Ultrasonic_3" 60
+F1 "Ultrasonic.sch" 60
+F2 "+5V" I R 2600 2200 60 
+F3 "GND" I R 2600 2300 60 
+F4 "Trigger" I R 2600 2400 60 
+F5 "Echo" O R 2600 2500 60 
+$EndSheet
+$Sheet
+S 2050 2800 550  500 
+U 58FCD70D
+F0 "Ultrasonic_4" 60
+F1 "Ultrasonic.sch" 60
+F2 "+5V" I R 2600 2900 60 
+F3 "GND" I R 2600 3000 60 
+F4 "Trigger" I R 2600 3100 60 
+F5 "Echo" O R 2600 3200 60 
+$EndSheet
+$Sheet
+S 9100 3100 550  400 
+U 58FCE12E
+F0 "Pull" 60
+F1 "SwitchInput.sch" 60
+F2 "+3.3V" I L 9100 3200 60 
+F3 "GND" I L 9100 3300 60 
+F4 "Signal" O L 9100 3400 60 
+$EndSheet
+$Sheet
+S 9100 3700 550  500 
+U 58FD00FF
+F0 "Com" 60
+F1 "Com.sch" 60
+F2 "GND" I L 9100 3900 60 
+F3 "TX" I L 9100 4000 60 
+F4 "RX" O L 9100 4100 60 
+F5 "+3.3V" I L 9100 3800 60 
+$EndSheet
+$Sheet
+S 9100 5300 550  1000
+U 58FD28FA
+F0 "Driver" 60
+F1 "Driver.sch" 60
+F2 "+7.4V" I L 9100 5400 60 
+F3 "+5V" I L 9100 5500 60 
+F4 "GND" I L 9100 5600 60 
+F5 "EN_A" I L 9100 5700 60 
+F6 "DIR_A_1" I L 9100 5800 60 
+F7 "DIR_A_2" I L 9100 5900 60 
+F8 "EN_B" I L 9100 6000 60 
+F9 "DIR_B_1" I L 9100 6100 60 
+F10 "DIR_B_2" I L 9100 6200 60 
+$EndSheet
+$Sheet
+S 5650 7000 550  300 
+U 58FD938A
+F0 "Power" 60
+F1 "Power.sch" 60
+F2 "GND" O L 5650 7200 60 
+F3 "+7.4V" O L 5650 7100 60 
+$EndSheet
+$Sheet
+S 9100 4400 550  700 
+U 58FDCE00
+F0 "Gyro" 60
+F1 "Gyro.sch" 60
+F2 "GND" I L 9100 4600 60 
+F3 "SCL" I L 9100 4800 60 
+F4 "+3.3V" I L 9100 4500 60 
+F5 "DR" O L 9100 4900 60 
+F6 "INT" I L 9100 5000 60 
+F7 "SDA" B L 9100 4700 60 
+$EndSheet
+$Sheet
+S 2050 3500 550  400 
+U 59087A92
+F0 "Servos_1" 60
+F1 "Servos.sch" 60
+F2 "+7.4V" I R 2600 3600 60 
+F3 "GND" I R 2600 3700 60 
+F4 "S" B L 2050 3800 60 
+$EndSheet
+$Sheet
+S 2050 4100 550  400 
+U 5908C624
+F0 "Servos_2" 60
+F1 "Servos.sch" 60
+F2 "+7.4V" I R 2600 4200 60 
+F3 "GND" I R 2600 4300 60 
+F4 "S" B L 2050 4400 60 
+$EndSheet
+$Sheet
+S 2050 4700 550  400 
+U 5908C923
+F0 "Servos_3" 60
+F1 "Servos.sch" 60
+F2 "+7.4V" I R 2600 4800 60 
+F3 "GND" I R 2600 4900 60 
+F4 "S" B L 2050 5000 60 
+$EndSheet
+$Sheet
+S 2050 5300 550  400 
+U 5908C928
+F0 "Servos_4" 60
+F1 "Servos.sch" 60
+F2 "+7.4V" I R 2600 5400 60 
+F3 "GND" I R 2600 5500 60 
+F4 "S" B L 2050 5600 60 
+$EndSheet
+$Sheet
+S 2050 5900 550  600 
+U 5908CDD4
+F0 "TTL-Linker" 60
+F1 "TTL-Linker.sch" 60
+F2 "+7.4V" I R 2600 6300 60 
+F3 "GND" I R 2600 6400 60 
+F4 "S" B L 2050 6000 60 
+F5 "RX" I R 2600 6200 60 
+F6 "TX" O R 2600 6100 60 
+$EndSheet
+$Sheet
+S 3550 5800 1000 700 
+U 590929BB
+F0 "LevelShifter" 60
+F1 "LevelShifter.sch" 60
+F2 "+3.3V" I R 4550 5900 60 
+F3 "+5V" I L 3550 5900 60 
+F4 "GND" I L 3550 6000 60 
+F5 "Ch1_3.3V" B R 4550 6100 60 
+F6 "Ch2_3.3V" B R 4550 6200 60 
+F7 "Ch3_3.3V" B R 4550 6300 60 
+F8 "Ch4_3.3V" B R 4550 6400 60 
+F9 "Ch1_5V" B L 3550 6100 60 
+F10 "Ch2_5V" B L 3550 6200 60 
+F11 "Ch3_5V" B L 3550 6300 60 
+F12 "Ch4_5V" B L 3550 6400 60 
+$EndSheet
+$Sheet
+S 5050 2000 1700 4550
+U 5908ED8A
+F0 "Embedded" 60
+F1 "Embedded.sch" 60
+F2 "+5V" O L 5050 2100 60 
+F3 "+3.3V" O L 5050 2200 60 
+F4 "GND" O L 5050 2300 60 
+F5 "Pull" I R 6750 3400 60 
+F6 "Servos_RX" I L 5050 6100 60 
+F7 "Servos_TX" O L 5050 6200 60 
+F8 "SCL" O R 6750 4800 60 
+F9 "SDA" B R 6750 4700 60 
+F10 "DR" I R 6750 4900 60 
+F11 "INT" O R 6750 5000 60 
+F12 "EN_A" O R 6750 5700 60 
+F13 "EN_B" O R 6750 6000 60 
+F14 "DIR_A_1" O R 6750 5800 60 
+F15 "DIR_A_2" O R 6750 5900 60 
+F16 "DIR_B_1" O R 6750 6100 60 
+F17 "DIR_B_2" O R 6750 6200 60 
+F18 "Trigger_1" O L 5050 2450 60 
+F19 "Echo_1" I L 5050 2550 60 
+F20 "Trigger_2" O L 5050 2700 60 
+F21 "Echo_2" I L 5050 2800 60 
+F22 "Trigger_3" O L 5050 2950 60 
+F23 "Echo_3" I L 5050 3050 60 
+F24 "Trigger_4" O L 5050 3200 60 
+F25 "Echo_4" I L 5050 3300 60 
+F26 "GP2_1" I R 6750 2450 60 
+F27 "GP2_2" I R 6750 2550 60 
+F28 "GP2_3" I R 6750 2650 60 
+F29 "GP2_4" I R 6750 2750 60 
+F30 "Extra_RX" I R 6750 4100 60 
+F31 "Extra_TX" O R 6750 4000 60 
+$EndSheet
+Text Label 4900 2100 2    60   ~ 0
++5V
+Text Label 4900 2200 2    60   ~ 0
++3.3V
+Text Label 4900 2300 2    60   ~ 0
+GND
+Text Label 5500 7100 2    60   ~ 0
++7.4V
+Text Label 5500 7200 2    60   ~ 0
+GND
+Text Label 3400 5900 2    60   ~ 0
++5V
+Text Label 3400 6000 2    60   ~ 0
+GND
+Text Label 4700 5900 0    60   ~ 0
++3.3V
+Wire Wire Line
+	9100 3400 6750 3400
+Wire Wire Line
+	1950 6000 2050 6000
+Wire Wire Line
+	1950 3800 1950 6000
+Wire Wire Line
+	1950 5600 2050 5600
+Wire Wire Line
+	1950 5000 2050 5000
+Connection ~ 1950 5600
+Wire Wire Line
+	1950 4400 2050 4400
+Connection ~ 1950 5000
+Wire Wire Line
+	1950 3800 2050 3800
+Connection ~ 1950 4400
+Wire Wire Line
+	6750 4700 9100 4700
+Wire Wire Line
+	9100 4800 6750 4800
+Wire Wire Line
+	6750 4900 9100 4900
+Wire Wire Line
+	9100 5000 6750 5000
+Wire Wire Line
+	6750 5700 9100 5700
+Wire Wire Line
+	9100 5800 6750 5800
+Wire Wire Line
+	6750 5900 9100 5900
+Wire Wire Line
+	9100 6000 6750 6000
+Wire Wire Line
+	6750 6100 9100 6100
+Wire Wire Line
+	9100 6200 6750 6200
+Wire Wire Line
+	2600 1000 4250 1000
+Wire Wire Line
+	4250 1000 4250 2450
+Wire Wire Line
+	4250 2450 5050 2450
+Wire Wire Line
+	2600 1100 4200 1100
+Wire Wire Line
+	4200 1100 4200 2550
+Wire Wire Line
+	4200 2550 5050 2550
+Wire Wire Line
+	2600 1700 4100 1700
+Wire Wire Line
+	4100 1700 4100 2700
+Wire Wire Line
+	4100 2700 5050 2700
+Wire Wire Line
+	2600 1800 4050 1800
+Wire Wire Line
+	4050 1800 4050 2800
+Wire Wire Line
+	4050 2800 5050 2800
+Wire Wire Line
+	2600 2400 3950 2400
+Wire Wire Line
+	3950 2400 3950 2950
+Wire Wire Line
+	3950 2950 5050 2950
+Wire Wire Line
+	2600 2500 3900 2500
+Wire Wire Line
+	3900 2500 3900 3050
+Wire Wire Line
+	3900 3050 5050 3050
+Wire Wire Line
+	2600 3100 3800 3100
+Wire Wire Line
+	3800 3100 3800 3200
+Wire Wire Line
+	3800 3200 5050 3200
+Wire Wire Line
+	2600 3200 3750 3200
+Wire Wire Line
+	3750 3200 3750 3300
+Wire Wire Line
+	3750 3300 5050 3300
+Wire Wire Line
+	6750 2450 7950 2450
+Wire Wire Line
+	7950 2450 7950 1000
+Wire Wire Line
+	7950 1000 9100 1000
+Wire Wire Line
+	9100 1600 8000 1600
+Wire Wire Line
+	8000 1600 8000 2550
+Wire Wire Line
+	8000 2550 6750 2550
+Wire Wire Line
+	6750 2650 8050 2650
+Wire Wire Line
+	8050 2650 8050 2200
+Wire Wire Line
+	8050 2200 9100 2200
+Wire Wire Line
+	9100 2800 8050 2800
+Wire Wire Line
+	8050 2800 8050 2750
+Wire Wire Line
+	8050 2750 6750 2750
+Wire Wire Line
+	6750 4000 9100 4000
+Wire Wire Line
+	6750 4100 9100 4100
+Wire Wire Line
+	4900 2100 5050 2100
+Wire Wire Line
+	5050 2200 4900 2200
+Wire Wire Line
+	4900 2300 5050 2300
+Wire Wire Line
+	5500 7100 5650 7100
+Wire Wire Line
+	5500 7200 5650 7200
+Wire Wire Line
+	3400 5900 3550 5900
+Wire Wire Line
+	3400 6000 3550 6000
+Wire Wire Line
+	4550 5900 4700 5900
+Wire Wire Line
+	5050 6100 4550 6100
+Wire Wire Line
+	4550 6200 5050 6200
+Wire Wire Line
+	2600 6100 3550 6100
+Wire Wire Line
+	3550 6200 2600 6200
+Text Label 2750 800  0    60   ~ 0
++5V
+Wire Wire Line
+	2600 800  2750 800 
+Text Label 2750 900  0    60   ~ 0
+GND
+Wire Wire Line
+	2750 900  2600 900 
+Text Label 2750 2900 0    60   ~ 0
++5V
+Text Label 2750 3000 0    60   ~ 0
+GND
+Wire Wire Line
+	2750 2900 2600 2900
+Wire Wire Line
+	2750 3000 2600 3000
+Text Label 2750 1500 0    60   ~ 0
++5V
+Text Label 2750 1600 0    60   ~ 0
+GND
+Wire Wire Line
+	2750 1500 2600 1500
+Wire Wire Line
+	2750 1600 2600 1600
+Text Label 2750 2200 0    60   ~ 0
++5V
+Text Label 2750 2300 0    60   ~ 0
+GND
+Wire Wire Line
+	2750 2200 2600 2200
+Wire Wire Line
+	2750 2300 2600 2300
+Text Label 8950 900  2    60   ~ 0
+GND
+Wire Wire Line
+	8950 900  9100 900 
+Text Label 2750 3700 0    60   ~ 0
+GND
+Text Label 2750 3600 0    60   ~ 0
++7.4V
+Wire Wire Line
+	2750 3600 2600 3600
+Wire Wire Line
+	2750 3700 2600 3700
+Text Label 2750 4300 0    60   ~ 0
+GND
+Text Label 2750 4200 0    60   ~ 0
++7.4V
+Wire Wire Line
+	2750 4200 2600 4200
+Wire Wire Line
+	2750 4300 2600 4300
+Text Label 2750 4900 0    60   ~ 0
+GND
+Text Label 2750 4800 0    60   ~ 0
++7.4V
+Wire Wire Line
+	2750 4800 2600 4800
+Wire Wire Line
+	2750 4900 2600 4900
+Text Label 2750 5500 0    60   ~ 0
+GND
+Text Label 2750 5400 0    60   ~ 0
++7.4V
+Wire Wire Line
+	2750 5400 2600 5400
+Wire Wire Line
+	2750 5500 2600 5500
+Text Label 2750 6400 0    60   ~ 0
+GND
+Text Label 2750 6300 0    60   ~ 0
++7.4V
+Wire Wire Line
+	2750 6300 2600 6300
+Wire Wire Line
+	2750 6400 2600 6400
+Text Label 8950 800  2    60   ~ 0
++5V
+Wire Wire Line
+	8950 800  9100 800 
+Text Label 8950 5600 2    60   ~ 0
+GND
+Text Label 8950 5400 2    60   ~ 0
++7.4V
+Wire Wire Line
+	8950 5400 9100 5400
+Wire Wire Line
+	8950 5600 9100 5600
+Text Label 8950 5500 2    60   ~ 0
++5V
+Wire Wire Line
+	8950 5500 9100 5500
+Text Label 8950 4600 2    60   ~ 0
+GND
+Text Label 8950 4500 2    60   ~ 0
++3.3V
+Wire Wire Line
+	8950 4500 9100 4500
+Wire Wire Line
+	8950 4600 9100 4600
+Text Label 8950 3900 2    60   ~ 0
+GND
+Text Label 8950 3800 2    60   ~ 0
++3.3V
+Wire Wire Line
+	8950 3800 9100 3800
+Wire Wire Line
+	8950 3900 9100 3900
+Text Label 8950 3300 2    60   ~ 0
+GND
+Text Label 8950 3200 2    60   ~ 0
++3.3V
+Wire Wire Line
+	8950 3200 9100 3200
+Wire Wire Line
+	8950 3300 9100 3300
+Text Label 8950 2700 2    60   ~ 0
+GND
+Wire Wire Line
+	8950 2700 9100 2700
+Text Label 8950 2600 2    60   ~ 0
++5V
+Wire Wire Line
+	8950 2600 9100 2600
+Text Label 8950 2100 2    60   ~ 0
+GND
+Wire Wire Line
+	8950 2100 9100 2100
+Text Label 8950 2000 2    60   ~ 0
++5V
+Wire Wire Line
+	8950 2000 9100 2000
+Text Label 8950 1500 2    60   ~ 0
+GND
+Wire Wire Line
+	8950 1500 9100 1500
+Text Label 8950 1400 2    60   ~ 0
++5V
+Wire Wire Line
+	8950 1400 9100 1400
+$EndSCHEMATC
