@@ -33,3 +33,7 @@ float gyro_get_angle(void) {
 int gyro_get_angle_deg(void) {
   return angle * 180 / 14000;
 }
+
+void gyro_set_angle(float val) {
+  angle = (val / 3.1415) * 14000;
+}

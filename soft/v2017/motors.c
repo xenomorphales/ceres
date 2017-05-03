@@ -4,7 +4,7 @@
 #define MODE        PWM_LEFT
 #define FREQU       (1000U)
 #define MAX_PWM     (256U)
-#define MIN_PWM     (80U)
+#define MIN_PWM     (90U)
 
 #define MOT_PWM   PWM_DEV(0)
 

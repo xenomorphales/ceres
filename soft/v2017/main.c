@@ -1,21 +1,23 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "thread.h"
+#include "xtimer.h"
 
 #include "task.h"
-#include "motors.h"
-#include "gyro.h"
+#include "robot.h"
 #include "arm.h"
 
 int main(void) {
-  arm_init();
+  robot_init();
+  task_init();
+
+  int i = 0;
 
   while(1) {
-    while(arm_left_state() != ARM_RETRACTED) thread_yield();
-    arm_left_deploy();
-    while(arm_left_state() != ARM_DEPLOYED) thread_yield();
-    arm_left_retract();
+    robot_set_angle(3.1415*i/2.0);
+    robot_set_speed(80);
+    xtimer_sleep(3);
+    i++;
   }
 
   return 0;
