@@ -83,7 +83,7 @@ P 5500 3850
 F 0 "P9" H 5500 4000 50  0000 C CNN
 F 1 "Switch" V 5600 3850 50  0000 C CNN
 F 2 "" H 5500 3850 60  0001 C CNN
-F 3 "Sécable" H 5500 4100 60  0000 C CNN
+F 3 "Vertical male connector 2.54mm" H 5500 4100 60  0000 C CNN
 	1    5500 3850
 	-1   0    0    1   
 $EndComp

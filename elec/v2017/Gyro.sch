@@ -62,7 +62,7 @@ P 5800 4050
 F 0 "P15" H 5800 4400 50  0000 C CNN
 F 1 "Gyro" H 5800 4300 50  0000 C CNN
 F 2 "" H 5800 2850 50  0001 C CNN
-F 3 "Sécable 2 rangées" H 5800 3800 50  0000 C CNN
+F 3 "Vertical male connector 2.54mm" H 5800 3800 50  0000 C CNN
 	1    5800 4050
 	1    0    0    -1  
 $EndComp

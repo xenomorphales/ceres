@@ -50,7 +50,7 @@ P 5400 3800
 F 0 "P24" H 5400 4715 50  0000 C CNN
 F 1 "Embedded" H 5400 4624 50  0000 C CNN
 F 2 "" H 5400 2650 50  0001 C CNN
-F 3 "" H 5400 2650 50  0001 C CNN
+F 3 "Vertical male connector 2.54mm" H 5400 2950 50  0000 C CNN
 	1    5400 3800
 	1    0    0    -1  
 $EndComp

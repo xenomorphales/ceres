@@ -50,7 +50,7 @@ P 5650 3500
 F 0 "P10" H 5650 3700 50  0000 C CNN
 F 1 "UART" V 5750 3500 50  0000 C CNN
 F 2 "" H 5650 3500 60  0001 C CNN
-F 3 "Sécable" H 5650 3300 60  0000 C CNN
+F 3 "Vertical male connector 2.54mm" H 5650 3300 60  0000 C CNN
 	1    5650 3500
 	1    0    0    -1  
 $EndComp

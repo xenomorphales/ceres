@@ -1,0 +1,18 @@
+Component list for v2017 board:
+- 20\* Resistor 10kΩ min 0.25W
+- 1\* Resistor 18kΩ min 0.25W
+- 8\* Resistor 20kΩ min 0.25W
+- 1\* Resistor 100kΩ min 0.25W
+- 4\* Ceramic capacitor 100nF min 10V
+- 1\* Ceramic capacitor 1µF min 10V
+- 12\* Ceramic capacitor 10µF min 15V
+- 2\* Leaded electrolytic capacitor 470µF min 15V
+- 2\* Female XT60 connector
+- 1\* Male XT60 connector
+- 5\* Male 5264 3P connector
+- 2\* Vertical male connector 2.54mm 2 pins (for pull and TTL-Linker RX/TX)
+- 5\* Vertical male connector 2.54mm 3 pins (for extra UART and GP2s)
+- 4\* Vertical male connector 2.54mm 4 pins (for ultrasonic sensors)
+- 2\* Vertical male connector 2.54mm 2x4 pins (for motor driver and gyro)
+- 1\* Vertical male connector 2.54mm 2x15 pins (for embedded card)
+- 2\* Vertical socket header 2.54mm 6 pins (for the level shifter, unless you want to solder it directly onto the board)

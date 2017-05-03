@@ -48,9 +48,9 @@ L CONN_01X06 P22
 U 1 1 59092AEE
 P 5100 3600
 F 0 "P22" H 5050 3950 50  0000 L CNN
-F 1 "LevelShifter-3.3V_side" H 4750 3200 50  0000 L CNN
+F 1 "LevelShifter-3.3V_side" V 5250 3200 50  0000 L CNN
 F 2 "" H 5100 3600 50  0001 C CNN
-F 3 "" H 5100 3600 50  0001 C CNN
+F 3 "Vertical male connector 2.54mm" H 5100 3150 50  0000 C CNN
 	1    5100 3600
 	1    0    0    -1  
 $EndComp
@@ -59,9 +59,9 @@ L CONN_01X06 P23
 U 1 1 59092B31
 P 6300 3600
 F 0 "P23" H 6250 3950 50  0000 L CNN
-F 1 "LevelShifter-5V_side" H 5850 3200 50  0000 L CNN
+F 1 "LevelShifter-5V_side" V 6450 3200 50  0000 L CNN
 F 2 "" H 6300 3600 50  0001 C CNN
-F 3 "" H 6300 3600 50  0001 C CNN
+F 3 "Vertical male connector 2.54mm" H 6300 3050 50  0000 C CNN
 	1    6300 3600
 	-1   0    0    -1  
 $EndComp

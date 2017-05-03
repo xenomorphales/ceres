@@ -54,7 +54,7 @@ AR Path="/58FCB564/55E7C054" Ref="P4"  Part="1"
 F 0 "P1" H 4900 3950 50  0000 C CNN
 F 1 "GP2" V 5000 3750 50  0000 C CNN
 F 2 "" H 4900 3750 60  0001 C CNN
-F 3 "Sécable" H 4900 4050 60  0000 C CNN
+F 3 "Vertical male connector 2.54mm" H 4900 4050 60  0000 C CNN
 	1    4900 3750
 	-1   0    0    1   
 $EndComp

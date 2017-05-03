@@ -68,7 +68,7 @@ P 5700 4800
 F 0 "P12" H 5700 4950 50  0000 C CNN
 F 1 "Power" V 5800 4800 50  0000 C CNN
 F 2 "" H 5700 4800 50  0001 C CNN
-F 3 "XT-60" H 5700 4650 50  0000 C CNN
+F 3 "female XT-60" H 5700 4650 50  0000 C CNN
 	1    5700 4800
 	1    0    0    -1  
 $EndComp
@@ -79,7 +79,7 @@ P 5700 3750
 F 0 "P11" H 5700 3500 50  0000 C CNN
 F 1 "Driver" H 5700 4000 50  0000 C CNN
 F 2 "" H 5700 2550 50  0001 C CNN
-F 3 "Sécable 2 rangées" H 5700 4100 50  0000 C CNN
+F 3 "Vertical male connector 2.54mm" H 5700 4100 50  0000 C CNN
 	1    5700 3750
 	-1   0    0    -1  
 $EndComp
