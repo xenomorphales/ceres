@@ -2,6 +2,7 @@
 #define ARM_H
 
 typedef enum {
+  ARM_DISABLED,
   ARM_RETRACTED,
   ARM_DEPLOYED,
   ARM_MOVING,

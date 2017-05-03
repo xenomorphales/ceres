@@ -3,6 +3,9 @@
 #include "feetech.h"
 #include "dynamixel.h"
 
+#include "thread.h"
+#include "xtimer.h"
+
 #include <stdint.h>
 
 #define ARM_SERVO_NUMOF (5)
@@ -13,10 +16,29 @@ typedef enum {
   RETRACTED       = 0,
   DEPLOYED_MIDDLE = 1,
   DEPLOYED_DOWN   = 2,
+} pose_t;
 
-  NONE            = -1,
-  ERROR           = -2,
+typedef enum {
+  STATE_OFF,
+  STATE_INIT,
+  STATE_RETRACTED,
+  STATE_DEPLOYED,
+  STATE_MOVING_RETRACT_1,
+  STATE_MOVING_RETRACT_2,
+  STATE_MOVING_DEPLOY_1,
+  STATE_MOVING_DEPLOY_2,
+
+  STATE_ERROR
 } state_t;
+
+typedef enum {
+  EVENT_INIT,
+  EVENT_DEPLOY,
+  EVENT_RETRACT,
+  EVENT_DONE,
+
+  EVENT_EMPTY
+} event_t;
 
 static uint8_t _left_ids[ARM_SERVO_NUMOF] = {
   10, 11, 12, 13, 14
@@ -26,26 +48,28 @@ static uint8_t _right_ids[ARM_SERVO_NUMOF] = {
   20, 21, 22, 23, 24
 };
 
-static uint16_t _left_states[3][ARM_SERVO_NUMOF] = {
+static uint16_t _left_poses[3][ARM_SERVO_NUMOF] = {
   {256,  80, 512, 270, 130}, // RETRACTED
   {512, 512, 512, 270, 130}, // DEPLOYED_MIDDLE
   {512, 512, 100, 270, 130}, // DEPLOYED_DOWN
 };
 
-static uint16_t _right_states[3][ARM_SERVO_NUMOF] = {
+static uint16_t _right_poses[3][ARM_SERVO_NUMOF] = {
   {256,  80, 512, 270, 150}, // RETRACTED
   {512, 512, 512, 270, 150}, // DEPLOYED_MIDDLE
   {512, 512, 100, 270, 150}, // DEPLOYED_DOWN
 };
 
-static uint8_t _buffer[32];
+static uint8_t _buffer[64];
 static uart_half_duplex_t _stream;
 
-static state_t _left_cur_state = NONE;
-static state_t _right_cur_state = NONE;
+state_t _left_state = STATE_OFF;
+event_t _left_event = EVENT_EMPTY;
 
-static state_t _left_goal_state = NONE;
-static state_t _right_goal_state = NONE;
+state_t _right_state = STATE_OFF;
+event_t _right_event = EVENT_EMPTY;
+
+char arm_thread_stack[THREAD_STACKSIZE_MAIN];
 
 void _servo_enable(uint8_t id) {
   feetech_t dev;
@@ -75,43 +99,147 @@ void _arm_enable(uint8_t ids[ARM_SERVO_NUMOF]) {
   }
 }
 
-void _arm_set_state(uint8_t ids[ARM_SERVO_NUMOF], uint16_t state[ARM_SERVO_NUMOF]) {
+void _arm_set_pose(uint8_t ids[ARM_SERVO_NUMOF], uint16_t pose[ARM_SERVO_NUMOF]) {
   for(size_t i = 0 ; i < ARM_SERVO_NUMOF ; i++) {
-    _servo_set_angle(ids[i], state[i]);
+    _servo_set_angle(ids[i], pose[i]);
   }
 }
 
-bool _arm_check_state(uint8_t ids[ARM_SERVO_NUMOF], uint16_t state[ARM_SERVO_NUMOF]) {
+bool _arm_check_pose(uint8_t ids[ARM_SERVO_NUMOF], uint16_t pose[ARM_SERVO_NUMOF]) {
   for(size_t i = 0 ; i < ARM_SERVO_NUMOF ; i++) {
-    if(!_servo_check_angle(ids[i], state[i])) {
+    if(!_servo_check_angle(ids[i], pose[i])) {
       return false;
     }
   }
   return true;
 }
 
-static inline void _update(uint8_t ids[ARM_SERVO_NUMOF], uint16_t states[3][ARM_SERVO_NUMOF], state_t* cur, state_t goal) {
-  if(*cur != goal) {
-    if(*cur != DEPLOYED_MIDDLE) {
-      if(goal == RETRACTED) {
-        _arm_set_state(ids, states[DEPLOYED_MIDDLE]);
-        *cur = DEPLOYED_MIDDLE;
-      }
-    }
-    else {
-      if(_arm_check_state(_left_ids, _left_states[DEPLOYED_MIDDLE])) {
-        if(goal == DEPLOYED_DOWN || goal == RETRACTED) {
-          _arm_set_state(ids, states[goal]);
-          *cur = goal;
-        }
-      }
+static inline event_t _update_event(uint8_t ids[ARM_SERVO_NUMOF], uint16_t poses[3][ARM_SERVO_NUMOF], state_t state) {
+  if(state == STATE_OFF) {
+  }
+  else if(state == STATE_INIT) {
+    return EVENT_DONE;
+  }
+  else if(state == STATE_MOVING_DEPLOY_1) {
+    if(_arm_check_pose(ids, poses[DEPLOYED_MIDDLE])) {
+      return EVENT_DONE;
     }
   }
+  else if(state == STATE_MOVING_DEPLOY_2) {
+    if(_arm_check_pose(ids, poses[DEPLOYED_DOWN])) {
+      return EVENT_DONE;
+    }
+  }
+  else if(state == STATE_MOVING_RETRACT_1) {
+    if(_arm_check_pose(ids, poses[DEPLOYED_MIDDLE])) {
+      return EVENT_DONE;
+    }
+  }
+  else if(state == STATE_MOVING_RETRACT_2) {
+    if(_arm_check_pose(ids, poses[RETRACTED])) {
+      return EVENT_DONE;
+    }
+  }
+
+  return EVENT_EMPTY;
 }
 
-void arm_update(void) {
-  _update(_left_ids, _left_states, &_left_cur_state, _left_goal_state);
-  _update(_right_ids, _right_states, &_right_cur_state, _right_goal_state);
+static inline state_t _update_state(uint8_t ids[ARM_SERVO_NUMOF], uint16_t poses[3][ARM_SERVO_NUMOF], state_t state, event_t event) {
+  if(state == STATE_OFF) {
+    if(event == EVENT_INIT) {
+      _arm_enable(ids);
+      return STATE_INIT;
+    }
+  }
+  else if(state == STATE_INIT) {
+    if(event == EVENT_DONE) {
+      _arm_set_pose(ids, poses[DEPLOYED_MIDDLE]);
+      return STATE_MOVING_RETRACT_1;
+    }
+  }
+  else if(state == STATE_RETRACTED) {
+    if(event == EVENT_DEPLOY) {
+      _arm_set_pose(ids, poses[DEPLOYED_MIDDLE]);
+      return STATE_MOVING_DEPLOY_1;
+    }
+  }
+  else if(state == STATE_DEPLOYED) {
+    if(event == EVENT_RETRACT) {
+      _arm_set_pose(ids, poses[DEPLOYED_MIDDLE]);
+      return STATE_MOVING_RETRACT_1;
+    }
+  }
+  else if(state == STATE_MOVING_DEPLOY_1) {
+    if(event == EVENT_DONE) {
+      _arm_set_pose(ids, poses[DEPLOYED_DOWN]);
+      return STATE_MOVING_DEPLOY_2;
+    }
+  }
+  else if(state == STATE_MOVING_DEPLOY_2) {
+    if(event == EVENT_DONE) {
+      return STATE_DEPLOYED;
+    }
+  }
+  else if(state == STATE_MOVING_RETRACT_1) {
+    if(event == EVENT_DONE) {
+      _arm_set_pose(ids, poses[RETRACTED]);
+      return STATE_MOVING_RETRACT_2;
+    }
+  }
+  else if(state == STATE_MOVING_RETRACT_2) {
+    if(event == EVENT_DONE) {
+      return STATE_RETRACTED;
+    }
+  }
+
+  return state;
+}
+
+static inline arm_state_t _arm_state(state_t state) {
+  switch(state) {
+    case STATE_DEPLOYED:
+      return ARM_DEPLOYED;
+    case STATE_RETRACTED:
+      return ARM_RETRACTED;
+    case STATE_INIT:
+    case STATE_MOVING_DEPLOY_1:
+    case STATE_MOVING_DEPLOY_2:
+    case STATE_MOVING_RETRACT_1:
+    case STATE_MOVING_RETRACT_2:
+      return ARM_MOVING;
+    case STATE_OFF:
+      return ARM_DISABLED;
+    default:
+      return ARM_ERROR;
+  }
+  return ARM_ERROR;
+}
+
+static void* _arm_update_thread(void* arg) {
+  (void) arg;
+  xtimer_ticks32_t last_wakeup = xtimer_now();
+
+  while(1) {
+    xtimer_periodic_wakeup(&last_wakeup, 1000000UL/10UL);
+
+    // LEFT
+    if(_left_event == EVENT_EMPTY) {
+      _left_event = _update_event(_left_ids, _left_poses, _left_state);
+    }
+
+    _left_state = _update_state(_left_ids, _left_poses, _left_state, _left_event);
+    _left_event = EVENT_EMPTY;
+
+    // RIGHT
+    if(_right_event == EVENT_EMPTY) {
+      _right_event = _update_event(_right_ids, _right_poses, _right_state);
+    }
+
+    _right_state = _update_state(_right_ids, _right_poses, _right_state, _right_event);
+    _right_event = EVENT_EMPTY;
+  }
+
+  return NULL;
 }
 
 int arm_init(void) {
@@ -126,27 +254,44 @@ int arm_init(void) {
     return -1;
   }
 
-  _arm_enable(_left_ids);
+  _left_event = EVENT_INIT;
+  _right_event = EVENT_INIT;
 
-  _arm_set_state(_left_ids, _left_states[DEPLOYED_MIDDLE]);
-  while(!_arm_check_state(_left_ids, _left_states[DEPLOYED_MIDDLE]));
-
-  _arm_set_state(_left_ids, _left_states[RETRACTED]);
-  while(!_arm_check_state(_left_ids, _left_states[RETRACTED]));
-
-  _left_cur_state = RETRACTED;
-  _left_goal_state = RETRACTED;
-
-  _arm_enable(_right_ids);
-
-  _arm_set_state(_right_ids, _right_states[DEPLOYED_MIDDLE]);
-  while(!_arm_check_state(_right_ids, _right_states[DEPLOYED_MIDDLE]));
-
-  _arm_set_state(_right_ids, _right_states[RETRACTED]);
-  while(!_arm_check_state(_right_ids, _right_states[RETRACTED]));
-
-  _right_cur_state = RETRACTED;
-  _right_goal_state = RETRACTED;
+  thread_create(arm_thread_stack, sizeof(arm_thread_stack),
+                THREAD_PRIORITY_MAIN - 1, THREAD_CREATE_STACKTEST,
+                _arm_update_thread, NULL, "arm");
 
   return 0;
+}
+
+void arm_left_deploy(void) {
+  _left_event = EVENT_DEPLOY;
+}
+
+void arm_left_deploy_set_angles(float angle1, float angle2) {
+  _left_event = EVENT_DEPLOY;
+}
+
+void arm_left_retract(void) {
+  _left_event = EVENT_RETRACT;
+}
+
+arm_state_t arm_left_state(void) {
+  return _arm_state(_left_state);
+}
+
+void arm_right_deploy(void) {
+  _right_event = EVENT_DEPLOY;
+}
+
+void arm_right_deploy_set_angles(float angle1, float angle2) {
+  _right_event = EVENT_DEPLOY;
+}
+
+void arm_right_retract(void) {
+  _right_event = EVENT_RETRACT;
+}
+
+arm_state_t arm_right_state(void) {
+  return _arm_state(_right_state);
 }
