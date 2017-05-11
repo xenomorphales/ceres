@@ -13,8 +13,8 @@
 
 #define MOT1_DIR1 GPIO_PIN(PA, 13)
 #define MOT1_DIR2 GPIO_PIN(PA, 28)
-#define MOT2_DIR1 GPIO_PIN(PB, 3)
-#define MOT2_DIR2 GPIO_PIN(PB, 22)
+#define MOT2_DIR1 GPIO_PIN(PB, 22)
+#define MOT2_DIR2 GPIO_PIN(PB, 23)
 
 #define MIN(a, b) ((a > b) ? b : a)
 
