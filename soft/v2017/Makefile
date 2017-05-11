@@ -1,7 +1,9 @@
 APPLICATION = ceres
-BOARD ?= samr21-xpro
 
 RIOTBASE ?= ../../../RIOT
+
+RIOTBOARD ?= boards
+BOARD ?= samr21-xpro-ceres
 
 FEATURES_REQUIRED += periph_gpio
 FEATURES_REQUIRED += periph_pwm
