@@ -1,0 +1,10 @@
+INCLUDES += -I$(PWD)/robot_drivers/include
+
+FEATURES_REQUIRED += periph_gpio
+FEATURES_REQUIRED += periph_pwm
+FEATURES_REQUIRED += periph_i2c
+FEATURES_REQUIRED += periph_adc
+
+USEMODULE += l3g4200d
+USEMODULE += feetech
+USEMODULE += dynamixel
