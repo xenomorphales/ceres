@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-#define TASK_TIMER      TIMER_DEV(1)
+#define TASK_TIMER      TIMER_DEV(0)
 #define TASK_CHAN       (0)
 #define TASK_TIMER_FERQ (1000000UL)
 #define TASK_FREQ       (100UL)

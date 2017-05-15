@@ -7,13 +7,27 @@
 #include "gyro.h"
 #include "arm.h"
 #include "motors.h"
+#include "robot.h"
 #include "pull.h"
 #include "gp2.h"
 
+void check(int ret) {
+  if(ret < 0) {
+    puts("ERROR!!");
+  }
+}
+
 int main(void) {
-  gp2_init();
-  pull_init();
-  motors_init();
+  check(gp2_init());
+  check(pull_init());
+  check(arm_init());
+  //check(motors_init());
+  //check(gyro_init());
+  check(robot_init());
+  check(task_init());
+
+  robot_set_angle(0);
+  robot_set_speed(100);
 
   while(1) {
     int gp2_0 = gp2_value(0);
@@ -23,10 +37,17 @@ int main(void) {
     int pull = pull_state();
     printf("%3i %3i %3i %3i %3i\n", gp2_0, gp2_1, gp2_2, gp2_3, pull);
 
-    motors_set_left(gp2_0);
-    motors_set_right(gp2_1);
+    if(gp2_0 < 100 && gp2_1 < 100) {
+      robot_set_angle(0);
+      robot_set_speed(100);
+    }
+    else {
+      puts("STOP!!");
+      robot_set_angle(0);
+      robot_set_speed(0);
+    }
 
-    xtimer_sleep(1);
+    xtimer_usleep(200000);
   }
 
   return 0;
