@@ -11,6 +11,8 @@
 #include "pull.h"
 #include "gp2.h"
 
+#include "calibrate_action.hpp"
+
 void check(int ret) {
   if(ret < 0) {
     puts("ERROR!!");
