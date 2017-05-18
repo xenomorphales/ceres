@@ -1,5 +1,4 @@
 #include "l3g4200d.h"
-#include "periph/timer.h"
 
 #define GYRO_MODE        L3G4200D_MODE_100_25
 #define GYRO_SCALE       L3G4200D_SCALE_250DPS
@@ -13,7 +12,7 @@ static l3g4200d_t dev;
 static int32_t angle;
 
 void gyro_update(void) {
-  l3g4200d_data_t data;
+  l3g4200d_data_t data = { 0,0,0 };
   l3g4200d_read(&dev, &data);
   angle += data.acc_z;
 }
@@ -23,6 +22,7 @@ int gyro_init(void) {
     return -1;
   }
 
+  angle = 0;
   return 0;
 }
 

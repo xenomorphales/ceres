@@ -21,8 +21,8 @@ int main(void) {
   check(gp2_init());
   check(pull_init());
   check(arm_init());
-  //check(motors_init());
-  //check(gyro_init());
+  check(motors_init());
+  check(gyro_init());
   check(robot_init());
   check(task_init());
 

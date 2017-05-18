@@ -271,6 +271,8 @@ void arm_left_deploy(void) {
 }
 
 void arm_left_deploy_set_angles(float angle1, float angle2) {
+  (void) angle1;
+  (void) angle2;
   _left_event = EVENT_DEPLOY;
 }
 
@@ -287,6 +289,8 @@ void arm_right_deploy(void) {
 }
 
 void arm_right_deploy_set_angles(float angle1, float angle2) {
+  (void) angle1;
+  (void) angle2;
   _right_event = EVENT_DEPLOY;
 }
 

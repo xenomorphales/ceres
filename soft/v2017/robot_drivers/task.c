@@ -14,6 +14,9 @@ extern void gyro_update(void);
 #define ROBOT_FREQ (10UL)
 extern void robot_update(void);
 
+#define LOCATOR_FREQ (100UL)
+extern void locator_update(void);
+
 static uint32_t _counter = 0;
 
 static inline const uint32_t count(const uint32_t freq) {
@@ -29,6 +32,7 @@ static void _update(void *arg, int chan) {
   _timer_set();
   if(_counter % count(GYRO_FREQ) == 0) gyro_update();
   if(_counter % count(ROBOT_FREQ) == 0) robot_update();
+  if(_counter % count(LOCATOR_FREQ) == 0) locator_update();
 }
 
 int task_init(void) {
