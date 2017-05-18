@@ -1,6 +1,10 @@
 #ifndef ARM_H
 #define ARM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef enum {
   ARM_DISABLED,
   ARM_RETRACTED,
@@ -20,5 +24,9 @@ void arm_right_deploy(void);
 void arm_right_deploy_set_angles(float angle1, float angle2);
 void arm_right_retract(void);
 arm_state_t arm_right_state(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//ARM_H
