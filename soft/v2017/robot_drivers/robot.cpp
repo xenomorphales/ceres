@@ -1,7 +1,7 @@
-#include "robot.h"
+#include "robot.hpp"
 
-#include "gyro.h"
-#include "motors.h"
+#include "gyro.hpp"
+#include "motors.hpp"
 
 #include <stdint.h>
 
@@ -18,10 +18,10 @@ static const float _angle_d = 0;
 static float _angle_err_sum = 0;
 static float _angle_err_last = 0;
 
-void robot_update(void) {
+void Robot::Updater::update(void) {
   _distance += _speed_cmd;
 
-  const float cur = gyro_get_angle();
+  const float cur = Gyro::instance().angle().get();
   const float err = _angle_cmd - cur;
 
   const float diff = _angle_err_last - err;
@@ -37,46 +37,32 @@ void robot_update(void) {
   const int left  = dist + angle;
   const int right = dist - angle;
 
-  motors_set_left(left);
-  motors_set_right(right);
+  Motors::instance().left().put(left);
+  Motors::instance().right().put(right);
 
   _angle_err_last = err;
 }
 
-int robot_init(void) {
-  if(gyro_init() < 0) {
-    return -1;
-  }
-
-  if(motors_init() < 0) {
-    return -2;
-  }
-
-  _angle_cmd = robot_get_angle();
+Robot::Robot(void) {
+  _angle_cmd = Gyro::instance().angle().get();
   _speed_cmd = 0;
   _distance = 0;
   _angle_err_sum = 0;
   _angle_err_last = 0;
-
-  return 0;
 }
 
-void robot_set_speed(float speed) {
+void Robot::Speed::put(float speed) {
   _speed_cmd = speed;
 }
 
-void robot_set_angle(float angle) {
+void Robot::Angle::put(float angle) {
   _angle_cmd = angle;
 }
 
-float robot_get_speed(void) {
+float Robot::Speed::get(void) {
   return _speed_cmd;
 }
 
-float robot_get_angle(void) {
-  return gyro_get_angle();
-}
-
-float robot_get_distance(void) {
+float Robot::Distance::get(void) {
   return _distance;
 }

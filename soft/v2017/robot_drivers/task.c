@@ -33,8 +33,8 @@ static inline int _timer_set(void) {
 static void _update(void *arg, int chan) {
   _counter++;
   _timer_set();
-  if(_counter % count(GYRO_FREQ) == 0) gyro_update();
-  if(_counter % count(ROBOT_FREQ) == 0) robot_update();
+  //if(_counter % count(GYRO_FREQ) == 0) gyro_update();
+  //if(_counter % count(ROBOT_FREQ) == 0) robot_update();
   if(_counter % count(LOCATOR_FREQ) == 0) locator_update();
   if(_counter % count(CARTESIAN_FREQ) == 0) cartesian_update();
 }

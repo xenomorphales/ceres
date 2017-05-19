@@ -1,6 +1,6 @@
 #include "cartesian.h"
 
-#include "robot.h"
+//#include "robot.h"
 
 #include <math.h>
 
@@ -9,10 +9,11 @@ static float _cmd_vy;
 static float _cmd_a;
 
 void cartesian_update(void) {
-  robot_set_speed(0);
+  /*
+  //robot_set_speed(0);
   if(_cmd_vx != 0 || _cmd_vy != 0) {
     float cmd_a = atan2f(_cmd_vy, _cmd_vx);
-    float a = robot_get_angle();
+    float a = 0;//robot_get_angle();
     float amod = fmod(a, 3.14*2);
     if(amod<-3.14) amod += 3.14;
     if(amod>3.14)  amod -= 3.14;
@@ -32,15 +33,16 @@ void cartesian_update(void) {
       }
     }
 
-    robot_set_angle(cmd_a+adiv);
+    //robot_set_angle(cmd_a+adiv);
     if(fabs(cmd_a-amod) < 0.5*3.14/180.0) {
       speed_mul *= cosf(cmd_a-amod);
-      robot_set_speed(speed_mul*sqrt(_cmd_vx*_cmd_vx + _cmd_vy*_cmd_vy));
+      //robot_set_speed(speed_mul*sqrt(_cmd_vx*_cmd_vx + _cmd_vy*_cmd_vy));
     }
   }
   else {
-    robot_set_angle(_cmd_a);
+    //robot_set_angle(_cmd_a);
   }
+  */
 }
 
 int cartesian_init(void) {

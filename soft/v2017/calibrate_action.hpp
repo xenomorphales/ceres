@@ -4,7 +4,7 @@
 #include "action.hpp"
 
 #include "cartesian.h"
-#include "gyro.h"
+#include "gyro.hpp"
 #include "xtimer.h"
 
 class CalibrateAction : public Action {
@@ -48,22 +48,22 @@ public:
       }
       else if(now - _begining < 4000000) {
         if(_dir == XPOS) {
-          gyro_set_angle(0);
+          Gyro::instance().angle().set(0);
           cartesian_set_angle(0);
           cartesian_set_speed(-1, 0);
         }
         else if(_dir == XNEG) {
-          gyro_set_angle(3.1415);
+          Gyro::instance().angle().set(3.1415);
           cartesian_set_angle(3.1415);
           cartesian_set_speed(1, 0);
         }
         else if(_dir == YPOS) {
-          gyro_set_angle(3.1415/2.0);
+          Gyro::instance().angle().set(3.1415/2.0);
           cartesian_set_angle(3.1415/2.0);
           cartesian_set_speed(0, -1);
         }
         else if(_dir == YNEG) {
-          gyro_set_angle(-3.1415/2.0);
+          Gyro::instance().angle().set(-3.1415/2.0);
           cartesian_set_angle(-3.1415/2.0);
           cartesian_set_speed(0, 1);
         }
