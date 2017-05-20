@@ -3,8 +3,9 @@
 
 #include "singleton.hpp"
 #include "service.hpp"
+#include "device.hpp"
 
-class Cartesian : public Singleton<Cartesian>, Service {
+class Cartesian : public Singleton<Cartesian>, public Service {
 private:
   class Angle;
   class VX;
@@ -34,21 +35,21 @@ public:
   }
 };
 
-class Cartesian::Angle : private Cartesian {
+class Cartesian::Angle : private Cartesian, public Output<float> {
 public:
   inline void put(float val) {
     _cmd_a = val;
   }
 };
 
-class Cartesian::VX : private Cartesian {
+class Cartesian::VX : private Cartesian, public Output<float> {
 public:
   inline void put(float val) {
     _cmd_vx = val;
   }
 };
 
-class Cartesian::VY : private Cartesian {
+class Cartesian::VY : private Cartesian, public Output<float> {
 public:
   inline void put(float val) {
     _cmd_vy = val;

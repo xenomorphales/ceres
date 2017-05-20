@@ -1,6 +1,7 @@
 #include <motors.hpp>
 #include <gyro.hpp>
 #include <robot.hpp>
+#include <cartesian.hpp>
 #include <arm.hpp>
 
 #include <stdio.h>
@@ -15,6 +16,7 @@ static const ServiceName sn[] = {
   {"motors", &Motors::instance()},
   {"gyro", &Gyro::instance()},
   {"robot", &Robot::instance()},
+  {"cartesian", &Cartesian::instance()},
   {"arm", &Arm::instance()},
 };
 

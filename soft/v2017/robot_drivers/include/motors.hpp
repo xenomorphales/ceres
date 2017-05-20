@@ -3,6 +3,7 @@
 
 #include "singleton.hpp"
 #include "service.hpp"
+#include "device.hpp"
 
 class Motors : public Singleton<Motors>, public Service {
 private:
@@ -17,12 +18,12 @@ public:
   Right& right(void) { return *(Right*)this; }
 };
 
-class Motors::Left : private Motors {
+class Motors::Left : private Motors, public Output<int> {
 public:
   void put(int);
 };
 
-class Motors::Right : private Motors {
+class Motors::Right : private Motors, public Output<int> {
 public:
   void put(int);
 };

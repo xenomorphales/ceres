@@ -48,22 +48,22 @@ public:
       }
       else if(now - _begining < 4000000) {
         if(_dir == XPOS) {
-          Gyro::instance().angle().set(0);
+          Gyro::instance().angle().put(0);
           Cartesian::instance().angle().put(0);
           Cartesian::instance().setSpeed(-1, 0);
         }
         else if(_dir == XNEG) {
-          Gyro::instance().angle().set(3.1415);
+          Gyro::instance().angle().put(3.1415);
           Cartesian::instance().angle().put(3.1415);
           Cartesian::instance().setSpeed(1, 0);
         }
         else if(_dir == YPOS) {
-          Gyro::instance().angle().set(3.1415/2.0);
+          Gyro::instance().angle().put(3.1415/2.0);
           Cartesian::instance().angle().put(3.1415/2.0);
           Cartesian::instance().setSpeed(0, -1);
         }
         else if(_dir == YNEG) {
-          Gyro::instance().angle().set(-3.1415/2.0);
+          Gyro::instance().angle().put(-3.1415/2.0);
           Cartesian::instance().angle().put(-3.1415/2.0);
           Cartesian::instance().setSpeed(0, 1);
         }

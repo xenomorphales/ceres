@@ -3,6 +3,7 @@
 
 #include "singleton.hpp"
 #include "service.hpp"
+#include "device.hpp"
 
 class Robot : public Singleton<Robot>, public Service {
 private:
@@ -27,14 +28,14 @@ public:
   inline Updater& updater(void) { return *(Updater*)this; }
 };
 
-class Robot::Angle : private Robot {
+class Robot::Angle : private Robot, public Output<float> {
 public:
   void put(float val) {
     _angle_cmd = val;
   }
 };
 
-class Robot::Speed : private Robot {
+class Robot::Speed : private Robot, public Input<float>, public Output<float> {
 public:
   inline void put(float val) {
     _speed_cmd = val;
@@ -45,7 +46,7 @@ public:
   }
 };
 
-class Robot::Distance : private Robot {
+class Robot::Distance : private Robot, public Input<float> {
 public:
   inline float get(void) {
     return _distance;

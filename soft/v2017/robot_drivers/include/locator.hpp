@@ -3,6 +3,7 @@
 
 #include "singleton.hpp"
 #include "service.hpp"
+#include "device.hpp"
 
 class Locator : public Singleton<Locator>, Service {
 private:
@@ -25,24 +26,24 @@ public:
   inline Updater& updater(void) { return *(Updater*)this; }
 };
 
-class Locator::X : private Locator {
+class Locator::X : private Locator, public Input<float>, public Output<float> {
 public:
   inline float get(void) {
     return _x;
   }
 
-  inline void set(float val) {
+  inline void put(float val) {
     _x = val;
   }
 };
 
-class Locator::Y : private Locator {
+class Locator::Y : private Locator, public Input<float>, public Output<float> {
 public:
   inline float get(void) {
     return _y;
   }
 
-  inline void set(float val) {
+  inline void put(float val) {
     _y = val;
   }
 };
