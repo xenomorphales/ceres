@@ -1,3 +1,10 @@
+#include "task.h"
+
+#include "gyro.hpp"
+#include "robot.hpp"
+#include "locator.hpp"
+#include "cartesian.hpp"
+
 #include "periph/timer.h"
 
 #include <stdint.h>
@@ -7,18 +14,6 @@
 #define TASK_TIMER_FERQ (1000000UL)
 #define TASK_FREQ       (100UL)
 #define TASK_TIMEOUT    (TASK_TIMER_FERQ/TASK_FREQ)
-
-#define GYRO_FREQ (100UL)
-extern void gyro_update(void);
-
-#define ROBOT_FREQ (10UL)
-extern void robot_update(void);
-
-#define LOCATOR_FREQ (100UL)
-extern void locator_update(void);
-
-#define CARTESIAN_FREQ (5UL)
-extern void cartesian_update(void);
 
 static uint32_t _counter = 0;
 
@@ -30,13 +25,20 @@ static inline int _timer_set(void) {
   return timer_set(TASK_TIMER, TASK_CHAN, TASK_TIMEOUT);
 }
 
+template<class Singleton>
+static inline void _update_singleton(void) {
+  if(_counter % count(Singleton::instance().updater().FREQ) == 0) {
+    Singleton::instance().updater().update();
+  }
+}
+
 static void _update(void *arg, int chan) {
   _counter++;
   _timer_set();
-  //if(_counter % count(GYRO_FREQ) == 0) gyro_update();
-  //if(_counter % count(ROBOT_FREQ) == 0) robot_update();
-  if(_counter % count(LOCATOR_FREQ) == 0) locator_update();
-  if(_counter % count(CARTESIAN_FREQ) == 0) cartesian_update();
+  _update_singleton<Gyro>();
+  _update_singleton<Robot>();
+  _update_singleton<Locator>();
+  _update_singleton<Cartesian>();
 }
 
 int task_init(void) {

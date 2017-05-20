@@ -3,7 +3,7 @@
 
 #include "action.hpp"
 
-#include "cartesian.h"
+#include "cartesian.hpp"
 #include "gyro.hpp"
 #include "xtimer.h"
 
@@ -34,42 +34,42 @@ public:
 
       if(now - _begining < 3000000) {
         if(_dir == XPOS) {
-          cartesian_set_speed(1, 0);
+          Cartesian::instance().setSpeed(1, 0);
         }
         else if(_dir == XNEG) {
-          cartesian_set_speed(-1, 0);
+          Cartesian::instance().setSpeed(-1, 0);
         }
         else if(_dir == YPOS) {
-          cartesian_set_speed(0, 1);
+          Cartesian::instance().setSpeed(0, 1);
         }
         else if(_dir == YNEG) {
-          cartesian_set_speed(0, -1);
+          Cartesian::instance().setSpeed(0, -1);
         }
       }
       else if(now - _begining < 4000000) {
         if(_dir == XPOS) {
           Gyro::instance().angle().set(0);
-          cartesian_set_angle(0);
-          cartesian_set_speed(-1, 0);
+          Cartesian::instance().angle().put(0);
+          Cartesian::instance().setSpeed(-1, 0);
         }
         else if(_dir == XNEG) {
           Gyro::instance().angle().set(3.1415);
-          cartesian_set_angle(3.1415);
-          cartesian_set_speed(1, 0);
+          Cartesian::instance().angle().put(3.1415);
+          Cartesian::instance().setSpeed(1, 0);
         }
         else if(_dir == YPOS) {
           Gyro::instance().angle().set(3.1415/2.0);
-          cartesian_set_angle(3.1415/2.0);
-          cartesian_set_speed(0, -1);
+          Cartesian::instance().angle().put(3.1415/2.0);
+          Cartesian::instance().setSpeed(0, -1);
         }
         else if(_dir == YNEG) {
           Gyro::instance().angle().set(-3.1415/2.0);
-          cartesian_set_angle(-3.1415/2.0);
-          cartesian_set_speed(0, 1);
+          Cartesian::instance().angle().put(-3.1415/2.0);
+          Cartesian::instance().setSpeed(0, 1);
         }
       }
       else {
-        cartesian_set_speed(0, 0);
+        Cartesian::instance().setSpeed(0, 0);
         setState(END);
       }
     }

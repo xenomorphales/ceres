@@ -5,11 +5,11 @@
 
 #include "task.h"
 #include "gyro.hpp"
-#include "arm.h"
+#include "arm.hpp"
 #include "motors.hpp"
 #include "robot.hpp"
-#include "pull.h"
-#include "gp2.h"
+#include "pull.hpp"
+#include "gp2.hpp"
 
 #include "calibrate_action.hpp"
 
@@ -20,23 +20,17 @@ void check(int ret) {
 }
 
 int main(void) {
-  check(gp2_init());
-  check(pull_init());
-  check(arm_init());
-  //check(motors_init());
-  //check(gyro_init());
-  //check(robot_init());
   check(task_init());
 
   Robot::instance().angle().put(0);
   Robot::instance().speed().put(100);
 
   while(1) {
-    int gp2_0 = gp2_value(0);
-    int gp2_1 = gp2_value(1);
-    int gp2_2 = gp2_value(2);
-    int gp2_3 = gp2_value(3);
-    int pull = pull_state();
+    int gp2_0 = GP2::gp2[0].get();
+    int gp2_1 = GP2::gp2[1].get();
+    int gp2_2 = GP2::gp2[2].get();
+    int gp2_3 = GP2::gp2[3].get();
+    int pull = Pull::instance().state();
     printf("%3i %3i %3i %3i %3i\n", gp2_0, gp2_1, gp2_2, gp2_3, pull);
 
     if(gp2_0 < 100 && gp2_1 < 100) {

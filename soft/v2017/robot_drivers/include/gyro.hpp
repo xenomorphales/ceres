@@ -35,6 +35,9 @@ public:
 
 class Gyro::Updater : private Gyro {
 public:
+  static const int FREQ = 100;
+
+public:
   void update(void);
 };
 

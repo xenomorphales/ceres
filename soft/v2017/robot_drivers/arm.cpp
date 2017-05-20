@@ -1,4 +1,4 @@
-#include "arm.h"
+#include "arm.hpp"
 
 #include "feetech.h"
 #include "dynamixel.h"
@@ -197,24 +197,24 @@ static inline state_t _update_state(uint8_t ids[ARM_SERVO_NUMOF], uint16_t poses
   return state;
 }
 
-static inline arm_state_t _arm_state(state_t state) {
+static inline Arm::ArmState _arm_state(state_t state) {
   switch(state) {
     case STATE_DEPLOYED:
-      return ARM_DEPLOYED;
+      return Arm::ARM_DEPLOYED;
     case STATE_RETRACTED:
-      return ARM_RETRACTED;
+      return Arm::ARM_RETRACTED;
     case STATE_INIT:
     case STATE_MOVING_DEPLOY_1:
     case STATE_MOVING_DEPLOY_2:
     case STATE_MOVING_RETRACT_1:
     case STATE_MOVING_RETRACT_2:
-      return ARM_MOVING;
+      return Arm::ARM_MOVING;
     case STATE_OFF:
-      return ARM_DISABLED;
+      return Arm::ARM_DISABLED;
     default:
-      return ARM_ERROR;
+      return Arm::ARM_ERROR;
   }
-  return ARM_ERROR;
+  return Arm::ARM_ERROR;
 }
 
 static void* _arm_update_thread(void* arg) {
@@ -244,16 +244,15 @@ static void* _arm_update_thread(void* arg) {
   return NULL;
 }
 
-int arm_init(void) {
-  uart_half_duplex_params_t params = {
-    .uart = UART_DEV(1),
-    .baudrate = 1000000,
-    .dir = UART_HALF_DUPLEX_DIR_NONE,
-  };
+Arm::Arm(void) {
+  uart_half_duplex_params_t params = {};
+  params.uart = UART_DEV(1);
+  params.baudrate = 1000000;
+  params.dir = UART_HALF_DUPLEX_DIR_NONE;
 
   int ret = uart_half_duplex_init(&_stream, _buffer, sizeof(_buffer), &params);
   if(ret != UART_HALF_DUPLEX_OK) {
-    return -1;
+    setState(ERROR);
   }
 
   _left_event = EVENT_INIT;
@@ -262,42 +261,28 @@ int arm_init(void) {
   thread_create(arm_thread_stack, sizeof(arm_thread_stack),
                 THREAD_PRIORITY_MAIN - 1, THREAD_CREATE_STACKTEST,
                 _arm_update_thread, NULL, "arm");
-
-  return 0;
 }
 
-void arm_left_deploy(void) {
+void Arm::Left::deploy(void) {
   _left_event = EVENT_DEPLOY;
 }
 
-void arm_left_deploy_set_angles(float angle1, float angle2) {
-  (void) angle1;
-  (void) angle2;
-  _left_event = EVENT_DEPLOY;
-}
-
-void arm_left_retract(void) {
+void Arm::Left::retract(void) {
   _left_event = EVENT_RETRACT;
 }
 
-arm_state_t arm_left_state(void) {
+Arm::ArmState Arm::Left::state(void) {
   return _arm_state(_left_state);
 }
 
-void arm_right_deploy(void) {
+void Arm::Right::deploy(void) {
   _right_event = EVENT_DEPLOY;
 }
 
-void arm_right_deploy_set_angles(float angle1, float angle2) {
-  (void) angle1;
-  (void) angle2;
-  _right_event = EVENT_DEPLOY;
-}
-
-void arm_right_retract(void) {
+void Arm::Right::retract(void) {
   _right_event = EVENT_RETRACT;
 }
 
-arm_state_t arm_right_state(void) {
+Arm::ArmState Arm::Right::state(void) {
   return _arm_state(_right_state);
 }

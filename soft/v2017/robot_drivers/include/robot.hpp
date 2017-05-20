@@ -39,6 +39,9 @@ public:
 
 class Robot::Updater : private Robot {
 public:
+  static const int FREQ = 20;
+
+public:
   void update(void);
 };
 
