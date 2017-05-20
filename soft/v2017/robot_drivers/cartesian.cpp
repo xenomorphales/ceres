@@ -6,6 +6,14 @@
 #include <math.h>
 
 void Cartesian::Updater::update(void) {
+  if(Robot::instance().state() != RUN) {
+    setState(STOP);
+  }
+
+  if(Gyro::instance().state() != RUN) {
+    setState(STOP);
+  }
+
   if(state() == RUN) {
     Robot::instance().speed().put(0);
     if(_cmd_vx != 0 || _cmd_vy != 0) {

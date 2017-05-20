@@ -72,26 +72,29 @@ void Motors::Right::put(int pwm) {
 Motors::Motors(void) {
   if(pwm_init(MOT_PWM, MODE, FREQU, MAX_PWM) == 0) {
     setState(ERROR);
+    return;
   }
 
   if(gpio_init(MOT1_DIR1, GPIO_OUT) != 0) {
     setState(ERROR);
+    return;
   }
 
   if(gpio_init(MOT1_DIR2, GPIO_OUT) != 0) {
     setState(ERROR);
+    return;
   }
 
   if(gpio_init(MOT2_DIR1, GPIO_OUT) != 0) {
     setState(ERROR);
+    return;
   }
 
   if(gpio_init(MOT2_DIR2, GPIO_OUT) != 0) {
     setState(ERROR);
+    return;
   }
 
   left().put(0);
   right().put(0);
-
-  setState(RUN);
 }

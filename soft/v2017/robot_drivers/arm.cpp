@@ -63,15 +63,15 @@ static uint16_t _right_poses[3][ARM_SERVO_NUMOF] = {
 };
 
 static uint8_t _buffer[64];
-static uart_half_duplex_t _stream;
+uart_half_duplex_t _stream;
 
-state_t _left_state = STATE_OFF;
-event_t _left_event = EVENT_EMPTY;
+static state_t _left_state = STATE_OFF;
+static event_t _left_event = EVENT_EMPTY;
 
-state_t _right_state = STATE_OFF;
-event_t _right_event = EVENT_EMPTY;
+static state_t _right_state = STATE_OFF;
+static event_t _right_event = EVENT_EMPTY;
 
-char arm_thread_stack[THREAD_STACKSIZE_MAIN];
+static char arm_thread_stack[THREAD_STACKSIZE_MAIN];
 
 void _servo_enable(uint8_t id) {
   feetech_t dev;

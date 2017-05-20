@@ -20,11 +20,10 @@ void Gyro::Updater::update(void) {
   }
 }
 
-Gyro::Gyro(void) {
+Gyro::Gyro(void)
+  : _angle(0) {
   if (l3g4200d_init(&dev, GYRO_I2C, GYRO_ADDR, GYRO_INT, GYRO_DR, GYRO_MODE, GYRO_SCALE) != 0) {
     setState(ERROR);
+    return;
   }
-
-  _angle = 0;
-  setState(RUN);
 }

@@ -11,6 +11,12 @@ private:
   class Distance;
   class Updater;
 
+protected:
+  float _speed_cmd = 0;
+  float _angle_cmd = 0;
+
+  float _distance = 0;
+
 public:
   Robot(void);
 
@@ -23,18 +29,27 @@ public:
 
 class Robot::Angle : private Robot {
 public:
-  void put(float);
+  void put(float val) {
+    _angle_cmd = val;
+  }
 };
 
 class Robot::Speed : private Robot {
 public:
-  void put(float);
-  float get(void);
+  inline void put(float val) {
+    _speed_cmd = val;
+  }
+
+  inline float get(void) {
+    return _speed_cmd;
+  }
 };
 
 class Robot::Distance : private Robot {
 public:
-  float get(void);
+  inline float get(void) {
+    return _distance;
+  }
 };
 
 class Robot::Updater : private Robot {

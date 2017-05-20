@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 
-#include "xtimer.h"
+#include <shell.h>
 
 #include "task.h"
 #include "gyro.hpp"
@@ -13,38 +14,22 @@
 
 #include "calibrate_action.hpp"
 
-void check(int ret) {
-  if(ret < 0) {
-    puts("ERROR!!");
-  }
-}
+extern int cmd_service(int argc, char** argv);
+extern int cmd_servo(int argc, char **argv);
+
+static const shell_command_t shell_commands[] = {
+  { "service", "Service management", cmd_service },
+  { "servo", "Servo management", cmd_servo },
+  { NULL, NULL, NULL }
+};
 
 int main(void) {
-  check(task_init());
+  task_init();
 
-  Robot::instance().angle().put(0);
-  Robot::instance().speed().put(100);
+  puts("Starting the shell");
 
-  while(1) {
-    int gp2_0 = GP2::gp2[0].get();
-    int gp2_1 = GP2::gp2[1].get();
-    int gp2_2 = GP2::gp2[2].get();
-    int gp2_3 = GP2::gp2[3].get();
-    int pull = Pull::instance().state();
-    printf("%3i %3i %3i %3i %3i\n", gp2_0, gp2_1, gp2_2, gp2_3, pull);
-
-    if(gp2_0 < 100 && gp2_1 < 100) {
-      Robot::instance().angle().put(0);
-      Robot::instance().speed().put(100);
-    }
-    else {
-      puts("STOP!!");
-      Robot::instance().angle().put(0);
-      Robot::instance().speed().put(0);
-    }
-
-    xtimer_usleep(200000);
-  }
+  char line_buf[SHELL_DEFAULT_BUFSIZE];
+  shell_run(shell_commands, line_buf, SHELL_DEFAULT_BUFSIZE);
 
   return 0;
 }
