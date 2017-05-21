@@ -116,6 +116,10 @@ auto gyro2rad_dev = make_dev("gyro.config.gyro2rad", Gyro::instance().config().g
 
 auto abot_dev = make_dev("robot.angle", Robot::instance().angle());
 auto sbot_dev = make_dev("robot.speed", Robot::instance().speed());
+auto capbot_dev = make_dev("robot.config.angle_p", Robot::instance().config().angle_p);
+auto csccbot_dev = make_dev("robot.config.speed_cmd_coeff", Robot::instance().config().speed_cmd_coeff);
+auto cscmibot_dev = make_dev("robot.config.speed_cmd_min", Robot::instance().config().speed_cmd_min);
+auto cscmabot_dev = make_dev("robot.config.speed_cmd_max", Robot::instance().config().speed_cmd_max);
 
 auto xloc_dev = make_dev("locator.x", Locator::instance().x());
 auto yloc_dev = make_dev("locator.y", Locator::instance().y());
@@ -129,6 +133,10 @@ static Dev* dev_list[] {
 
   &abot_dev,
   &sbot_dev,
+  &capbot_dev,
+  &csccbot_dev,
+  &cscmibot_dev,
+  &cscmabot_dev,
 
   &xloc_dev,
   &yloc_dev,
