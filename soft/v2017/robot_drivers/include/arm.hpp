@@ -18,6 +18,10 @@ public:
     ARM_ERROR
   };
 
+  enum GripState {
+    OPEN, CLOSE
+  };
+
 public:
   Arm(void);
 
@@ -27,6 +31,9 @@ public:
 };
 
 class Arm::Left : private Arm {
+private:
+  class Grip;
+
 public:
   void deploy(void);
   void retract(void);
@@ -36,9 +43,24 @@ public:
 
 public:
   ArmState state(void);
+
+public:
+  inline Grip& grip(void) { return *(Grip*)this; }
+};
+
+class Arm::Left::Grip : private Arm {
+public:
+  void open(void);
+  void close(void);
+
+public:
+  GripState state(void);
 };
 
 class Arm::Right : private Arm {
+private:
+  class Grip;
+
 public:
   void deploy(void);
   void retract(void);
@@ -48,6 +70,18 @@ public:
 
 public:
   ArmState state(void);
+
+public:
+  inline Grip& grip(void) { return *(Grip*)this; }
+};
+
+class Arm::Right::Grip : private Arm {
+public:
+  void open(void);
+  void close(void);
+
+public:
+  GripState state(void);
 };
 
 #endif//ARM_H
