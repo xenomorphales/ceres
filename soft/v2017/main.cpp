@@ -13,12 +13,17 @@ extern int cmd_ls(int argc, char** argv);
 extern int cmd_service(int argc, char** argv);
 extern int cmd_servo(int argc, char **argv);
 
+extern int cmd_test_speed(int argc, char** argv);
+
 static const shell_command_t shell_commands[] = {
-  { "service", "Service management", cmd_service },
-  { "servo", "Servo management", cmd_servo },
   { "read", "", cmd_read },
   { "write", "", cmd_write },
   { "ls", "", cmd_ls },
+
+  { "service", "Service management", cmd_service },
+  { "servo", "Servo management", cmd_servo },
+
+  { "test", "Move at some speed during some time", cmd_test_speed},
   { NULL, NULL, NULL }
 };
 
