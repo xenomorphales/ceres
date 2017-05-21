@@ -14,9 +14,9 @@ private:
 
 private:
   struct Config {
-    float speed_cmd_coeff = 100.0/(49.0/2.0);
-    float speed_cmd_min = 27.5/2.0;
-    float speed_cmd_max = 60.0/2.0;
+    float speed_cmd_coeff = 4.25;
+    float speed_cmd_min = 20.0;
+    float speed_cmd_max = 30.0;
     float angle_p = 100;
   };
 
@@ -48,19 +48,7 @@ public:
 
 class Robot::Speed : private Robot, public Input<float>, public Output<float> {
 public:
-  inline void put(float val) {
-    if(val > _config.speed_cmd_min) {
-      if(val < _config.speed_cmd_max) {
-        _speed_cmd = val;
-      }
-      else {
-        _speed_cmd = _config.speed_cmd_max;
-      }
-    }
-    else {
-      _speed_cmd = 0;
-    }
-  }
+  void put(float val);
 
   inline float get(void) {
     return _speed_cmd;

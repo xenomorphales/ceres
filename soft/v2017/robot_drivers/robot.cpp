@@ -38,3 +38,32 @@ Robot::Robot(void) {
   _speed_cmd = 0;
   _distance = 0;
 }
+
+void Robot::Speed::put(float val) {
+  if(val > 0) {
+    if(val > _config.speed_cmd_min) {
+      if(val < _config.speed_cmd_max) {
+        _speed_cmd = val;
+      }
+      else {
+        _speed_cmd = _config.speed_cmd_max;
+      }
+    }
+    else {
+      _speed_cmd = 0;
+    }
+  }
+  else {
+    if(val < -_config.speed_cmd_min) {
+      if(val > -_config.speed_cmd_max) {
+        _speed_cmd = val;
+      }
+      else {
+        _speed_cmd = -_config.speed_cmd_max;
+      }
+    }
+    else {
+      _speed_cmd = 0;
+    }
+  }
+}
