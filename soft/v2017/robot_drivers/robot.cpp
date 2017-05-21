@@ -15,7 +15,7 @@ void Robot::Updater::update(void) {
   }
 
   if(state() == RUN) {
-    _distance += _speed_cmd;
+    _distance += _speed_cmd / FREQ;
 
     const float cur = Gyro::instance().angle().get();
     const float err = _angle_cmd - cur;
