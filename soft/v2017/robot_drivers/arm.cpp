@@ -56,7 +56,7 @@ static uint16_t _left_poses[3][ARM_SERVO_NUMOF] = {
 
 static uint16_t _right_poses[3][ARM_SERVO_NUMOF] = {
   {140, 140, 540, 270, 200}, // RETRACTED
-  {512, 512, 512, 270, 150}, // DEPLOYED_MIDDLE
+  {512, 512, 630, 270, 150}, // DEPLOYED_MIDDLE
   {512, 512, 100, 270, 150}, // DEPLOYED_DOWN
 };
 
