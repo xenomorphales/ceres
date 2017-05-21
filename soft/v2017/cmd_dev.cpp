@@ -112,6 +112,7 @@ auto lmot_dev = make_dev("motors.left", Motors::instance().left());
 auto rmot_dev = make_dev("motors.right", Motors::instance().right());
 
 auto gyro_dev = make_dev("gyro.angle", Gyro::instance().angle());
+auto gyro2rad_dev = make_dev("gyro.config.gyro2rad", Gyro::instance().config().gyro2rad);
 
 auto abot_dev = make_dev("robot.angle", Robot::instance().angle());
 auto sbot_dev = make_dev("robot.speed", Robot::instance().speed());
@@ -124,6 +125,7 @@ static Dev* dev_list[] {
   &rmot_dev,
 
   &gyro_dev,
+  &gyro2rad_dev,
 
   &abot_dev,
   &sbot_dev,
