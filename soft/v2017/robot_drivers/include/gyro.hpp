@@ -6,7 +6,7 @@
 #include "device.hpp"
 
 #include <stdint.h>
-#include <math.h>
+#include "math.hpp"
 
 class Gyro : public Singleton<Gyro>, public Service {
 private:

@@ -21,27 +21,27 @@ struct Dev {
 
 #define FLOAT_COEFF (1000.0)
 
-void put(float& dev, int val) { dev = ((float)val)/FLOAT_COEFF; }
-void put(uint8_t& dev, int val) { dev = val; }
-void put(uint16_t& dev, int val) { dev = val; }
-void put(uint32_t& dev, int val) { dev = val; }
-void put(uint64_t& dev, int val) { dev = val; }
-void put(int8_t& dev, int val) { dev = val; }
-void put(int16_t& dev, int val) { dev = val; }
-void put(int32_t& dev, int val) { dev = val; }
-void put(int64_t& dev, int val) { dev = val; }
-void put(int& dev, int val) { dev = val; }
+void put(float* dev, int val) { (*dev) = ((float)val)/FLOAT_COEFF; }
+void put(uint8_t* dev, int val) { (*dev) = val; }
+void put(uint16_t* dev, int val) { (*dev) = val; }
+void put(uint32_t* dev, int val) { (*dev) = val; }
+void put(uint64_t* dev, int val) { (*dev) = val; }
+void put(int8_t* dev, int val) { (*dev) = val; }
+void put(int16_t* dev, int val) { (*dev) = val; }
+void put(int32_t* dev, int val) { (*dev) = val; }
+void put(int64_t* dev, int val) { (*dev) = val; }
+void put(int* dev, int val) { (*dev) = val; }
 
-int get(float& dev) { return (dev*FLOAT_COEFF); }
-int get(uint8_t& dev) { return dev; }
-int get(uint16_t& dev) { return dev; }
-int get(uint32_t& dev) { return dev; }
-int get(uint64_t& dev) { return dev; }
-int get(int8_t& dev) { return dev; }
-int get(int16_t& dev) { return dev; }
-int get(int32_t& dev) { return dev; }
-int get(int64_t& dev) { return dev; }
-int get(int& dev) { return dev; }
+int get(float* dev) { return ((*dev)*FLOAT_COEFF); }
+int get(uint8_t* dev) { return (*dev); }
+int get(uint16_t* dev) { return (*dev); }
+int get(uint32_t* dev) { return (*dev); }
+int get(uint64_t* dev) { return (*dev); }
+int get(int8_t* dev) { return (*dev); }
+int get(int16_t* dev) { return (*dev); }
+int get(int32_t* dev) { return (*dev); }
+int get(int64_t* dev) { return (*dev); }
+int get(int* dev) { return (*dev); }
 
 template<class IO> struct _GetType {};
 template<typename T> struct _GetType<Output<T>> { using Type = T; };
@@ -51,12 +51,12 @@ template<class IO> using GetType = typename _GetType<IO>::Type;
 template<class IO>
 struct PutIfOutput {
   template<typename T>
-  static void put(Output<T>& dev, int val) {
-    ((IO&)dev).put(val);
+  static void put(Output<T>* dev, int val) {
+    (*(IO*)dev).put(val);
   }
 
-  static void put(Output<float>& dev, int val) {
-    ((IO&)dev).put(((float)val)/FLOAT_COEFF);
+  static void put(Output<float>* dev, int val) {
+    (*(IO*)dev).put(((float)val)/FLOAT_COEFF);
   }
 
   static void put(...) {}
@@ -65,24 +65,24 @@ struct PutIfOutput {
 template<class IO>
 struct GetIfInput {
   template<typename T>
-  static int get(Input<T>& dev) {
-    return ((IO&)dev).get();
+  static int get(Input<T>* dev) {
+    return (*(IO*)dev).get();
   }
 
-  static int get(Input<float>& dev) {
-    return ((IO&)dev).get()*FLOAT_COEFF;
+  static int get(Input<float>* dev) {
+    return (*(IO*)dev).get()*FLOAT_COEFF;
   }
 
   static int get(...) { return 0; }
 };
 
 template<typename T>
-void put(T& dev, int val) {
+void put(T* dev, int val) {
   PutIfOutput<T>::put(dev, val);
 }
 
 template<typename T>
-int get(T& dev) {
+int get(T* dev) {
   return GetIfInput<T>::get(dev);
 }
 
@@ -95,11 +95,11 @@ struct IntDev : Dev {
   }
 
   void write(const char* in) {
-    put(_dev, atoi(in));
+    put(&_dev, atoi(in));
   }
 
   void print(void) {
-    printf("%i\n", (int)get(_dev));
+    printf("%i\n", (int)get(&_dev));
   }
 };
 
