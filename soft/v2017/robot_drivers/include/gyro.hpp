@@ -15,7 +15,7 @@ private:
 
 private:
   struct Config {
-    int32_t gyro2rad = 15000;
+    int32_t gyro2rad = -15000;
   };
 
 protected:

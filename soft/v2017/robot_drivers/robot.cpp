@@ -25,8 +25,8 @@ void Robot::Updater::update(void) {
     const int angle = (p);
     const int dist = _speed_cmd * _config.speed_cmd_coeff;
 
-    const int left  = dist + angle;
-    const int right = dist - angle;
+    const int left  = dist - angle;
+    const int right = dist + angle;
 
     Motors::instance().left().put(left);
     Motors::instance().right().put(right);

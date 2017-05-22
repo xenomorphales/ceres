@@ -32,9 +32,8 @@ Funny::Funny(void) {
     return;
   }
 
-  disable();
-
   setState(RUN);
+  disable();
 }
 
 void Funny::disable(void) {
@@ -43,6 +42,8 @@ void Funny::disable(void) {
 }
 
 void Funny::release(void) {
-  _set(30, 512, false);
-  _set(31, 512, true);
+  if(state() == RUN) {
+    _set(30, 512, false);
+    _set(31, 512, true);
+  }
 }
