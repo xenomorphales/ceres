@@ -35,24 +35,36 @@ public:
   }
 };
 
-class Cartesian::Angle : private Cartesian, public Output<float> {
+class Cartesian::Angle : private Cartesian, public Output<float>, public Input<float> {
 public:
   inline void put(float val) {
     _cmd_a = val;
   }
+
+  inline float get(void) {
+    return _cmd_a;
+  }
 };
 
-class Cartesian::VX : private Cartesian, public Output<float> {
+class Cartesian::VX : private Cartesian, public Output<float>, public Input<float> {
 public:
   inline void put(float val) {
     _cmd_vx = val;
   }
+
+  inline float get(void) {
+    return _cmd_vx;
+  }
 };
 
-class Cartesian::VY : private Cartesian, public Output<float> {
+class Cartesian::VY : private Cartesian, public Output<float>, public Input<float> {
 public:
   inline void put(float val) {
     _cmd_vy = val;
+  }
+
+  inline float get(void) {
+    return _cmd_vy;
   }
 };
 

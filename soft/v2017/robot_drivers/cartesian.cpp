@@ -39,7 +39,7 @@ void Cartesian::Updater::update(void) {
       }
 
       Robot::instance().angle().put(cmd_a+adiv);
-      if(fabs(cmd_a-amod) < 0.5*3.14/180.0) {
+      if(fabs(cmd_a-amod) < 4*3.14/180.0) {
         speed_mul *= cosf(cmd_a-amod);
         Robot::instance().speed().put(speed_mul*sqrt(_cmd_vx*_cmd_vx + _cmd_vy*_cmd_vy));
       }
