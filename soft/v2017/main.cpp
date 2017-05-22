@@ -24,7 +24,7 @@ static const shell_command_t shell_commands[] = {
   { "service", "Service management", cmd_service },
   { "servo", "Servo management", cmd_servo },
 
-  { "test", "Move at some speed during some time", cmd_test_speed},
+  { "test", "Test speed*time", cmd_test_speed},
   { "funny", "Test funny action", cmd_test_funny},
   { NULL, NULL, NULL }
 };

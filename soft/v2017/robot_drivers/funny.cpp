@@ -8,11 +8,16 @@ static void _disable(int id) {
   feetech_write8(&dev, SCS15_TORQUE_ENABLE, 0);
 }
 
-static void _set(int id, int angle) {
+static void _set(int id, int angle, bool slow = false) {
   feetech_t dev;
   feetech_init(&dev, &ServoBus::instance().stream(), id);
   feetech_write8(&dev, SCS15_TORQUE_ENABLE, 1);
-  feetech_write16(&dev, SCS15_GOAL_TIME, 512);
+  if(slow) {
+    feetech_write16(&dev, SCS15_GOAL_TIME, 512);
+  }
+  else {
+    feetech_write16(&dev, SCS15_GOAL_TIME, 0);
+  }
   feetech_write16(&dev, SCS15_GOAL_POSITION, angle);
 }
 
@@ -38,6 +43,6 @@ void Funny::disable(void) {
 }
 
 void Funny::release(void) {
-  _set(30, 512);
-  _set(31, 512);
+  _set(30, 512, false);
+  _set(31, 512, true);
 }
