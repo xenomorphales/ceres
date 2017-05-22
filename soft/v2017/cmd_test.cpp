@@ -1,7 +1,19 @@
 #include <stdlib.h>
 #include <xtimer.h>
+#include <motors.hpp>
+#include <gyro.hpp>
 #include <robot.hpp>
+#include <locator.hpp>
 #include <funny.hpp>
+
+int cmd_test_all(int, char**) {
+  Motors::instance().start();
+  Gyro::instance().start();
+  Robot::instance().start();
+  Locator::instance().start();
+
+  return 0;
+}
 
 int cmd_test_speed(int argc, char** argv) {
   if(argc != 3) {

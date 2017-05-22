@@ -16,9 +16,9 @@ void Locator::Updater::update(void) {
 
   if(state() == RUN) {
     float angle = Gyro::instance().angle().get();
-    float speed = Robot::instance().speed().get();
+    float dist = Robot::instance().speed().get() / FREQ;
 
-    _x += cosf(angle) * speed;
-    _y += sinf(angle) * speed;
+    _x += cosf(angle) * dist;
+    _y += sinf(angle) * dist;
   }
 }
