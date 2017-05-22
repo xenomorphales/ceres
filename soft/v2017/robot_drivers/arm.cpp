@@ -218,21 +218,23 @@ static void* _arm_update_thread(void* arg) {
   while(1) {
     xtimer_periodic_wakeup(&last_wakeup, 1000000UL/10UL);
 
-    // LEFT
-    if(_left_event == EVENT_EMPTY) {
-      _left_event = _update_event(_left_ids, _left_poses, _left_state);
+    if(Arm::instance().state() == Service::RUN) {
+      // LEFT
+      if(_left_event == EVENT_EMPTY) {
+        _left_event = _update_event(_left_ids, _left_poses, _left_state);
+      }
+
+      _left_state = _update_state(_left_ids, _left_poses, _left_state, _left_event);
+      _left_event = EVENT_EMPTY;
+
+      // RIGHT
+      if(_right_event == EVENT_EMPTY) {
+        _right_event = _update_event(_right_ids, _right_poses, _right_state);
+      }
+
+      _right_state = _update_state(_right_ids, _right_poses, _right_state, _right_event);
+      _right_event = EVENT_EMPTY;
     }
-
-    _left_state = _update_state(_left_ids, _left_poses, _left_state, _left_event);
-    _left_event = EVENT_EMPTY;
-
-    // RIGHT
-    if(_right_event == EVENT_EMPTY) {
-      _right_event = _update_event(_right_ids, _right_poses, _right_state);
-    }
-
-    _right_state = _update_state(_right_ids, _right_poses, _right_state, _right_event);
-    _right_event = EVENT_EMPTY;
   }
 
   return NULL;
@@ -245,8 +247,6 @@ Arm::Arm(void) {
   thread_create(arm_thread_stack, sizeof(arm_thread_stack),
                 THREAD_PRIORITY_MAIN - 1, THREAD_CREATE_STACKTEST,
                 _arm_update_thread, NULL, "arm");
-
-  setState(RUN);
 }
 
 void Arm::Left::deploy(void) {
