@@ -124,6 +124,10 @@ auto cscmabot_dev = make_dev("robot.config.speed_cmd_max", Robot::instance().con
 auto xloc_dev = make_dev("locator.x", Locator::instance().x());
 auto yloc_dev = make_dev("locator.y", Locator::instance().y());
 
+auto xcar_dev = make_dev("cartesian.vx", Cartesian::instance().vx());
+auto ycar_dev = make_dev("cartesian.vy", Cartesian::instance().vy());
+auto acar_dev = make_dev("cartesian.angle", Cartesian::instance().angle());
+
 static Dev* dev_list[] {
   &lmot_dev,
   &rmot_dev,
@@ -140,6 +144,10 @@ static Dev* dev_list[] {
 
   &xloc_dev,
   &yloc_dev,
+
+  &xcar_dev,
+  &ycar_dev,
+  &acar_dev,
 };
 
 #define AR_SIZE(ar) (sizeof(ar)/sizeof(ar[0]))
