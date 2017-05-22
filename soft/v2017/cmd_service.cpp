@@ -1,8 +1,10 @@
 #include <motors.hpp>
 #include <gyro.hpp>
 #include <robot.hpp>
+#include <locator.hpp>
 #include <cartesian.hpp>
 #include <arm.hpp>
+#include <funny.hpp>
 
 #include <stdio.h>
 #include <string.h>
@@ -16,8 +18,10 @@ static const ServiceName sn[] = {
   {"motors", &Motors::instance()},
   {"gyro", &Gyro::instance()},
   {"robot", &Robot::instance()},
+  {"locator", &Locator::instance()},
   {"cartesian", &Cartesian::instance()},
   {"arm", &Arm::instance()},
+  {"funny", &Funny::instance()},
 };
 
 #define AR_SIZE(ar) (sizeof(ar)/sizeof(ar[0]))

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <xtimer.h>
 #include <robot.hpp>
+#include <funny.hpp>
 
 int cmd_test_speed(int argc, char** argv) {
   if(argc != 3) {
@@ -26,5 +27,15 @@ int cmd_test_speed(int argc, char** argv) {
 
   printf("dist : %i\n", dist);
 
+  return 0;
+}
+
+int cmd_test_funny(int argc, char** argv) {
+  (void) argc;
+  (void) argv;
+
+  Funny::instance().release();
+  xtimer_sleep(1);
+  Funny::instance().disable();
   return 0;
 }

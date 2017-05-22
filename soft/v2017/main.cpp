@@ -14,6 +14,7 @@ extern int cmd_service(int argc, char** argv);
 extern int cmd_servo(int argc, char **argv);
 
 extern int cmd_test_speed(int argc, char** argv);
+extern int cmd_test_funny(int argc, char** argv);
 
 static const shell_command_t shell_commands[] = {
   { "read", "", cmd_read },
@@ -24,6 +25,7 @@ static const shell_command_t shell_commands[] = {
   { "servo", "Servo management", cmd_servo },
 
   { "test", "Move at some speed during some time", cmd_test_speed},
+  { "funny", "Test funny action", cmd_test_funny},
   { NULL, NULL, NULL }
 };
 

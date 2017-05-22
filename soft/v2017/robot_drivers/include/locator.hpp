@@ -5,7 +5,7 @@
 #include "service.hpp"
 #include "device.hpp"
 
-class Locator : public Singleton<Locator>, Service {
+class Locator : public Singleton<Locator>, public Service {
 private:
   class X;
   class Y;

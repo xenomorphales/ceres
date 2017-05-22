@@ -1,10 +1,9 @@
 #include "arm.hpp"
 
-#include "feetech.h"
-#include "dynamixel.h"
+#include "servo.hpp"
 
-#include "thread.h"
-#include "xtimer.h"
+#include <thread.h>
+#include <xtimer.h>
 
 #include <stdint.h>
 
@@ -60,9 +59,6 @@ static uint16_t _right_poses[3][ARM_SERVO_NUMOF] = {
   {512, 512, 100, 270, 150}, // DEPLOYED_DOWN
 };
 
-static uint8_t _buffer[64];
-uart_half_duplex_t _stream;
-
 static state_t _left_state = STATE_OFF;
 static event_t _left_event = EVENT_EMPTY;
 
@@ -73,21 +69,21 @@ static char arm_thread_stack[THREAD_STACKSIZE_MAIN];
 
 void _servo_enable(uint8_t id) {
   feetech_t dev;
-  feetech_init(&dev, &_stream, id);
+  feetech_init(&dev, &ServoBus::instance().stream(), id);
   feetech_write8(&dev, SCS15_TORQUE_ENABLE, 1);
   feetech_write16(&dev, SCS15_GOAL_TIME, 512);
 }
 
 void _servo_set_angle(uint8_t id, uint16_t angle) {
   feetech_t dev;
-  feetech_init(&dev, &_stream, id);
+  feetech_init(&dev, &ServoBus::instance().stream(), id);
   feetech_write16(&dev, SCS15_GOAL_POSITION, angle);
 }
 
 bool _servo_check_angle(uint8_t id, uint16_t angle) {
   uint16_t res = 0xFFFF;
   feetech_t dev;
-  feetech_init(&dev, &_stream, id);
+  feetech_init(&dev, &ServoBus::instance().stream(), id);
   feetech_read16(&dev, SCS15_PRESENT_POSITION, &res);
 
   return abs((int)res-(int)angle) < SERVO_DELTA;
@@ -243,22 +239,14 @@ static void* _arm_update_thread(void* arg) {
 }
 
 Arm::Arm(void) {
-  uart_half_duplex_params_t params = {};
-  params.uart = UART_DEV(1);
-  params.baudrate = 1000000;
-  params.dir = UART_HALF_DUPLEX_DIR_NONE;
-
-  int ret = uart_half_duplex_init(&_stream, _buffer, sizeof(_buffer), &params);
-  if(ret != UART_HALF_DUPLEX_OK) {
-    setState(ERROR);
-  }
-
   _left_event = EVENT_INIT;
   _right_event = EVENT_INIT;
 
   thread_create(arm_thread_stack, sizeof(arm_thread_stack),
                 THREAD_PRIORITY_MAIN - 1, THREAD_CREATE_STACKTEST,
                 _arm_update_thread, NULL, "arm");
+
+  setState(RUN);
 }
 
 void Arm::Left::deploy(void) {

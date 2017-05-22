@@ -1,10 +1,4 @@
-/*
- * Copyright (C) 2017 Inria
- *
- * This file is subject to the terms and conditions of the GNU Lesser General
- * Public License v2.1. See the file LICENSE in the top level directory for more
- * details.
- */
+#include "servo.hpp"
 
 #include "feetech.h"
 #include "shell.h"
@@ -76,8 +70,6 @@ static const int32_t baudrates[] = {
     38400L,
 };
 
-extern uart_half_duplex_t _stream;
-
 static int parse_dev(char *arg)
 {
     int dev = atoi(arg);
@@ -136,7 +128,7 @@ static int cmd_ping(int argc, char **argv) {
     }
 
     /* ping */
-    if (feetech_ping(&_stream, id) == FEETECH_OK) {
+    if (feetech_ping(&ServoBus::instance().stream(), id) == FEETECH_OK) {
         printf("Device %i responded\n", id);
     }
     else {
@@ -174,7 +166,7 @@ static int cmd_scan(int argc, char **argv) {
     /* ping */
     puts("Scanning...");
     for (int id = min ; id < max ; id++) {
-        if (feetech_ping(&_stream, id) == FEETECH_OK) {
+        if (feetech_ping(&ServoBus::instance().stream(), id) == FEETECH_OK) {
             printf("Device %i available\n", id);
         }
     }
@@ -205,7 +197,7 @@ static int cmd_read(int argc, char **argv) {
 
     /* read */
     feetech_t dev;
-    feetech_init(&dev, &_stream, id);
+    feetech_init(&dev, &ServoBus::instance().stream(), id);
     if (reg8 >= 0) {
         uint8_t val = 0;
         int ret = feetech_read8(&dev, reg8, &val);
@@ -255,7 +247,7 @@ static int cmd_write(int argc, char **argv) {
 
     /* read */
     feetech_t dev;
-    feetech_init(&dev, &_stream, id);
+    feetech_init(&dev, &ServoBus::instance().stream(), id);
     if (reg8 >= 0) {
         int ret = feetech_write8(&dev, reg8, val);
         if (ret != FEETECH_OK) {
