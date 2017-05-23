@@ -40,6 +40,8 @@ static void _update(void) {
   }
 
   if(xtimer_now_usec64() - _begin > 95000000) {
+    Funny::instance().start();
+    Funny::instance().disable();
     _state = START;
   }
 
