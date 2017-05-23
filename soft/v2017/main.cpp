@@ -6,6 +6,8 @@
 
 #include "task.h"
 
+#include "strategy.hpp"
+
 extern int cmd_read(int argc, char** argv);
 extern int cmd_write(int argc, char** argv);
 extern int cmd_ls(int argc, char** argv);
@@ -36,6 +38,7 @@ int main(void) {
 
   puts("Starting the shell");
 
+  Strategy::instance().start();
   char line_buf[SHELL_DEFAULT_BUFSIZE];
   shell_run(shell_commands, line_buf, SHELL_DEFAULT_BUFSIZE);
 

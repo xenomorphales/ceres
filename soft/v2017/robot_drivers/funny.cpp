@@ -22,6 +22,7 @@ static void _set(int id, int angle, bool slow = false) {
 }
 
 Funny::Funny(void) {
+  /*
   if(feetech_ping(&ServoBus::instance().stream(), 30) != FEETECH_OK) {
     setState(ERROR);
     return;
@@ -31,9 +32,10 @@ Funny::Funny(void) {
     setState(ERROR);
     return;
   }
+  */
 
   setState(RUN);
-  disable();
+  //disable();
 }
 
 void Funny::disable(void) {

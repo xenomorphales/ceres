@@ -4,6 +4,7 @@
 #include "singleton.hpp"
 
 class Pull : public Singleton<Pull> {
+public:
   enum State {
     IN, OUT
   };
