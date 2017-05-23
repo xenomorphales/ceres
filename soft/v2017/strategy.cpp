@@ -64,6 +64,7 @@ static void _update(void) {
       Funny::instance().start();
 
       Gyro::instance().angle().put(0);
+      Robot::instance().distance().put(0);
       Robot::instance().angle().put(0);
       Robot::instance().speed().put(0);
       Funny::instance().disable();
@@ -85,7 +86,7 @@ static void _update(void) {
       Robot::instance().speed().put(-25.0);
     }
 
-    if(Robot::instance().distance().get() > 50.0) {
+    if(Robot::instance().distance().get() < -50.0) {
       _state = WAIT_END;
     }
   }

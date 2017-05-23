@@ -55,10 +55,14 @@ public:
   }
 };
 
-class Robot::Distance : private Robot, public Input<float> {
+class Robot::Distance : private Robot, public Input<float>, public Output<float> {
 public:
   inline float get(void) {
     return _distance;
+  }
+
+  inline void put(float val) {
+    _distance = val;
   }
 };
 
