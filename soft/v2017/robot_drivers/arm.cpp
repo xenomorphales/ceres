@@ -48,13 +48,13 @@ static uint8_t _right_ids[ARM_SERVO_NUMOF] = {
 };
 
 static uint16_t _left_poses[3][ARM_SERVO_NUMOF] = {
-  {170,  80, 540, 330, 200}, // RETRACTED
+  {170,  80, 540, 400, 200}, // RETRACTED
   {512, 512, 630, 270, 130}, // DEPLOYED_MIDDLE
   {512, 512, 100, 270, 130}, // DEPLOYED_DOWN
 };
 
 static uint16_t _right_poses[3][ARM_SERVO_NUMOF] = {
-  {140, 140, 540, 330, 200}, // RETRACTED
+  {140, 140, 540, 330, 180}, // RETRACTED
   {512, 512, 630, 270, 150}, // DEPLOYED_MIDDLE
   {512, 512, 100, 270, 150}, // DEPLOYED_DOWN
 };

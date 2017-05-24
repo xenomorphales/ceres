@@ -1,9 +1,11 @@
-#include "servo.hpp"
+#include <servo.hpp>
 
-#include "feetech.h"
+#include "dynamixel.h"
 #include "shell.h"
 #include "shell_commands.h"
 #include "uart_stdio.h"
+#include "board.h"
+#include "periph/gpio.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -16,59 +18,59 @@ typedef struct {
 } reg_name_addr_t;
 
 static const reg_name_addr_t regs8[] = {
-    { "ID", SCS15_ID },
-    { "BAUD_RATE", SCS15_BAUD_RATE },
-    { "RETURN_DELAY_TIME", SCS15_RETURN_DELAY_TIME },
-    { "RETURN_LEVEL", SCS15_RETURN_LEVEL },
-    { "LIMIT_TEMPERATURE", SCS15_LIMIT_TEMPERATURE },
-    { "MAX_LIMIT_VOLTAGE", SCS15_MAX_LIMIT_VOLTAGE },
-    { "MIN_LIMIT_VOLTAGE", SCS15_MIN_LIMIT_VOLTAGE },
-    { "ALARM_LED", SCS15_ALARM_LED },
-    { "ALARM_SHUTDOWN", SCS15_ALARM_SHUTDOWN },
-    { "COMPLIANCE_P", SCS15_COMPLIANCE_P },
-    { "COMPLIANCE_D", SCS15_COMPLIANCE_D },
-    { "COMPLIANCE_I", SCS15_COMPLIANCE_I },
-    { "CW_DEAD", SCS15_CW_DEAD },
-    { "CCW_DEAD", SCS15_CCW_DEAD },
-    { "TORQUE_ENABLE", SCS15_TORQUE_ENABLE },
-    { "LED", SCS15_LED },
-    { "LOCK", SCS15_LOCK },
-    { "PRESENT_VOLTAGE", SCS15_PRESENT_VOLTAGE },
-    { "PRESENT_TEMPERATURE", SCS15_PRESENT_TEMPERATURE },
-    { "REGISTERED_INSTRUCTION", SCS15_REGISTERED_INSTRUCTION },
-    { "ERROR", SCS15_ERROR },
-    { "MOVING", SCS15_MOVING },
+   { "VERSION", XL320_VERSION },
+   { "ID", XL320_ID },
+   { "BAUD_RATE", XL320_BAUD_RATE },
+   { "RETURN_DELAY_TIME", XL320_RETURN_DELAY_TIME },
+   { "CONTROL_MODE", XL320_CONTROL_MODE },
+   { "LIMIT_TEMPERATURE", XL320_LIMIT_TEMPERATURE },
+   { "LOWER_LIMIT_VOLTAGE", XL320_LOWER_LIMIT_VOLTAGE },
+   { "UPPER_LIMIT_VOLTAGE", XL320_UPPER_LIMIT_VOLTAGE },
+   { "RETURN_LEVEL", XL320_RETURN_LEVEL },
+   { "ALARM_SHUTDOWN", XL320_ALARM_SHUTDOWN },
+   { "TORQUE_ENABLE", XL320_TORQUE_ENABLE },
+   { "LED", XL320_LED },
+   { "D_GAIN", XL320_D_GAIN },
+   { "I_GAIN", XL320_I_GAIN },
+   { "P_GAIN", XL320_P_GAIN },
+   { "PRESENT_VOLTAGE", XL320_PRESENT_VOLTAGE },
+   { "PRESENT_TEMPERATURE", XL320_PRESENT_TEMPERATURE },
+   { "REGISTERED_INST", XL320_REGISTERED_INST },
+   { "MOVING", XL320_MOVING },
+   { "ERROR", XL320_ERROR },
 };
 
 static const reg_name_addr_t regs16[] = {
-    { "MODEL_NUMBER", SCS15_MODEL_NUMBER },
-    { "VERSION", SCS15_VERSION },
-    { "MIN_ANGLE_LIMIT", SCS15_MIN_ANGLE_LIMIT },
-    { "MAX_ANGLE_LIMIT", SCS15_MAX_ANGLE_LIMIT },
-    { "MAX_TORQUE", SCS15_MAX_TORQUE },
-    { "PUNCH", SCS15_PUNCH },
-    { "IMAX", SCS15_IMAX },
-    { "OFFSET", SCS15_OFFSET },
-    { "GOAL_POSITION", SCS15_GOAL_POSITION },
-    { "GOAL_TIME", SCS15_GOAL_TIME },
-    { "GOAL_SPEED", SCS15_GOAL_SPEED },
-    { "PRESENT_POSITION", SCS15_PRESENT_POSITION },
-    { "PRESENT_SPEED", SCS15_PRESENT_SPEED },
-    { "PRESENT_LOAD", SCS15_PRESENT_LOAD },
-    { "VIR_POSITION", SCS15_VIR_POSITION },
-    { "CURRENT", SCS15_CURRENT },
+   { "MODEL_NUMBER", XL320_MODEL_NUMBER },
+   { "CW_ANGLE_LIMIT", XL320_CW_ANGLE_LIMIT },
+   { "CCW_ANGLE_LIMIT", XL320_CCW_ANGLE_LIMIT },
+   { "MAX_TORQUE", XL320_MAX_TORQUE },
+   { "GOAL_POSITION", XL320_GOAL_POSITION },
+   { "GOAL_VELOCITY", XL320_GOAL_VELOCITY },
+   { "GOAL_TORQUE", XL320_GOAL_TORQUE },
+   { "PRESENT_POSITION", XL320_PRESENT_POSITION },
+   { "PRESENT_SPEED", XL320_PRESENT_SPEED },
+   { "PRESENT_LOAD", XL320_PRESENT_LOAD },
+   { "PUNCH", XL320_PUNCH },
 };
 
-static const int32_t baudrates[] = {
-    1000000L,
-    500000L,
-    250000L,
-    128000L,
-    115200L,
-    76800L,
-    57600L,
-    38400L,
-};
+#ifdef DXL_DIR_PIN
+static void dir_init(uart_t uart) {
+    gpio_init(DXL_DIR_PIN, GPIO_OUT);
+}
+
+static void dir_enable_tx(uart_t uart) {
+    gpio_set(DXL_DIR_PIN);
+}
+
+static void dir_disable_tx(uart_t uart) {
+    gpio_clear(DXL_DIR_PIN);
+}
+#else
+#define dir_init       NULL
+#define dir_enable_tx  NULL
+#define dir_disable_tx NULL
+#endif
 
 static int parse_dev(char *arg)
 {
@@ -102,7 +104,7 @@ static void parse_reg(char *arg, int *reg8, int *reg16)
     printf("Error: Invalid register (%s)\n", arg);
 }
 
-void print_registers(void) {
+static void print_registers(void) {
     puts("available 8bits registers :");
     for (size_t i = 0 ; i < ARRAY_LEN(regs8) ; i++) {
         printf("\t%s\n", regs8[i].name);
@@ -128,7 +130,7 @@ static int cmd_ping(int argc, char **argv) {
     }
 
     /* ping */
-    if (feetech_ping(&ServoBus::instance().stream(), id) == FEETECH_OK) {
+    if (dynamixel_ping(&ServoBus::instance().stream(), id) == DYNAMIXEL_OK) {
         printf("Device %i responded\n", id);
     }
     else {
@@ -166,7 +168,7 @@ static int cmd_scan(int argc, char **argv) {
     /* ping */
     puts("Scanning...");
     for (int id = min ; id < max ; id++) {
-        if (feetech_ping(&ServoBus::instance().stream(), id) == FEETECH_OK) {
+        if (dynamixel_ping(&ServoBus::instance().stream(), id) == DYNAMIXEL_OK) {
             printf("Device %i available\n", id);
         }
     }
@@ -196,12 +198,12 @@ static int cmd_read(int argc, char **argv) {
     }
 
     /* read */
-    feetech_t dev;
-    feetech_init(&dev, &ServoBus::instance().stream(), id);
+    dynamixel_t dev;
+    dynamixel_init(&dev, &ServoBus::instance().stream(), id);
     if (reg8 >= 0) {
         uint8_t val = 0;
-        int ret = feetech_read8(&dev, reg8, &val);
-        if (ret != FEETECH_OK) {
+        int ret = dynamixel_read8(&dev, reg8, &val);
+        if (ret != DYNAMIXEL_OK) {
             printf("Error[%i] : No response from %i\n", ret, id);
             return -1;
         }
@@ -209,8 +211,8 @@ static int cmd_read(int argc, char **argv) {
     }
     else {
         uint16_t val = 0;
-        int ret = feetech_read16(&dev, reg16, &val);
-        if (ret != FEETECH_OK) {
+        int ret = dynamixel_read16(&dev, reg16, &val);
+        if (ret != DYNAMIXEL_OK) {
             printf("Error[%i] : No response from %i\n", ret, id);
             return -1;
         }
@@ -246,19 +248,19 @@ static int cmd_write(int argc, char **argv) {
     }
 
     /* read */
-    feetech_t dev;
-    feetech_init(&dev, &ServoBus::instance().stream(), id);
+    dynamixel_t dev;
+    dynamixel_init(&dev, &ServoBus::instance().stream(), id);
     if (reg8 >= 0) {
-        int ret = feetech_write8(&dev, reg8, val);
-        if (ret != FEETECH_OK) {
+        int ret = dynamixel_write8(&dev, reg8, val);
+        if (ret != DYNAMIXEL_OK) {
             printf("Error[%i] : No response from %i\n", ret, id);
             return -1;
         }
         printf("Written %i at address %i\n", (int)val, reg8);
     }
     else {
-        int ret = feetech_write16(&dev, reg16, val);
-        if (ret != FEETECH_OK) {
+        int ret = dynamixel_write16(&dev, reg16, val);
+        if (ret != DYNAMIXEL_OK) {
             printf("Error[%i] : No response from %i\n", ret, id);
             return -1;
         }
@@ -267,7 +269,7 @@ static int cmd_write(int argc, char **argv) {
     return 0;
 }
 
-int cmd_servo(int argc, char **argv) {
+int cmd_dxl(int argc, char **argv) {
   if(argc < 2) {
     return -1;
   }

@@ -13,7 +13,9 @@ extern int cmd_write(int argc, char** argv);
 extern int cmd_ls(int argc, char** argv);
 
 extern int cmd_service(int argc, char** argv);
-extern int cmd_servo(int argc, char **argv);
+
+extern int cmd_feetech(int argc, char **argv);
+extern int cmd_dxl(int argc, char **argv);
 
 extern int cmd_test_all(int, char**);
 extern int cmd_test_speed(int argc, char** argv);
@@ -25,7 +27,9 @@ static const shell_command_t shell_commands[] = {
   { "ls", "", cmd_ls },
 
   { "service", "Service management", cmd_service },
-  { "servo", "Servo management", cmd_servo },
+
+  { "feetech", "Feetech management", cmd_feetech },
+  { "dxl", "Dynamixel management", cmd_dxl },
 
   { "init_all", "Init all services", cmd_test_all},
   { "test", "Test speed*time", cmd_test_speed},
