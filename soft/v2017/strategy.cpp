@@ -1,11 +1,12 @@
 #include "strategy.hpp"
 
-#include <pull.hpp>
 #include <motors.hpp>
 #include <gyro.hpp>
 #include <robot.hpp>
 #include <funny.hpp>
 #include <gp2.hpp>
+
+#include "match.hpp"
 
 #include <thread.h>
 #include <xtimer.h>
@@ -22,84 +23,59 @@ enum StrategyState {
 
 static char _strategy_thread_stack[THREAD_STACKSIZE_MAIN];
 
-static StrategyState _state = START;
-static uint64_t _begin = 0;
-
 static void _update(void) {
-  if(xtimer_now_usec64() - _begin > 91000000) {
+  Match::instance().updater().update();
+
+  const Match::Phase phase = Match::instance().phase();
+  const Match::Subphase subphase = Match::instance().subphase();
+
+  if(phase == Match::MATCH) {
     Motors::instance().start();
-    Gyro::instance().stop();
-    Robot::instance().stop();
-    Funny::instance().start();
-
-    Motors::instance().left().put(0);
-    Motors::instance().right().put(0);
-
-    Funny::instance().release();
-    _state = FUNNY;
-  }
-
-  if(xtimer_now_usec64() - _begin > 95000000) {
-    Funny::instance().start();
-    Funny::instance().disable();
-    _state = START;
-  }
-
-  if(_state == START) {
-    if(Pull::instance().state() == Pull::OUT) {
-      _state = START_PULL_OUT;
-    }
-    else {
-      _state = START_PULL_IN;
-    }
-  }
-  else if(_state == START_PULL_OUT) {
-    if(Pull::instance().state() == Pull::IN) {
-      _state = START_PULL_IN;
-    }
-  }
-  else if(_state == START_PULL_IN) {
-    if(Pull::instance().state() == Pull::OUT) {
-      Motors::instance().start();
-      Gyro::instance().start();
-      Robot::instance().start();
-      Funny::instance().start();
-
+    Gyro::instance().start();
+    Robot::instance().start();
+    if(subphase == Match::BEGIN) {
       Gyro::instance().angle().put(0);
-      Robot::instance().distance().put(0);
       Robot::instance().angle().put(0);
       Robot::instance().speed().put(0);
-      Funny::instance().disable();
-
-      _begin = xtimer_now_usec64();
-      _state = WAIT_PMI;
+      Robot::instance().distance().put(0);
+    }
+    else if(subphase == Match::SAFE) {
+      if(Robot::instance().distance().get() > -50.0) {
+        if(GP2::gp2[0].get() > 110) {
+          Robot::instance().speed().put(0);
+        }
+        else if(GP2::gp2[1].get() > 110) {
+          Robot::instance().speed().put(0);
+        }
+        else {
+          Robot::instance().speed().put(-25.0);
+        }
+      }
+      else {
+        Robot::instance().speed().put(0);
+      }
     }
   }
-  else if(_state == WAIT_PMI) {
-    if(xtimer_now_usec64() - _begin > 5000000) {
-      _state = GO_OUT;
-    }
-  }
-  else if(_state == GO_OUT) {
-    if(GP2::gp2[0].get() > 150) {
-      Robot::instance().speed().put(0);
-    }
-    else {
-      Robot::instance().speed().put(-25.0);
-    }
-
-    if(Robot::instance().distance().get() < -50.0) {
-      _state = WAIT_END;
-    }
-  }
-  else if(_state == WAIT_END) {
+  else {
     Motors::instance().start();
     Gyro::instance().stop();
     Robot::instance().stop();
-    Funny::instance().stop();
 
     Motors::instance().left().put(0);
     Motors::instance().right().put(0);
+  }
+
+  if(phase == Match::FUNNY) {
+    Funny::instance().start();
+    if(subphase == Match::SAFE) {
+      Funny::instance().release();
+    }
+    if(subphase == Match::END) {
+      Funny::instance().disable();
+    }
+  }
+  else {
+    Funny::instance().stop();
   }
 }
 
