@@ -22,6 +22,10 @@ public:
     OPEN, CLOSE
   };
 
+  enum GripHoldState {
+    NONE, LEFT, RIGHT, BOTH
+  };
+
 public:
   Arm(void);
 
@@ -53,6 +57,8 @@ public:
   void open(void);
   void close(void);
 
+  GripHoldState hold(void);
+
 public:
   GripState state(void);
 };
@@ -79,6 +85,8 @@ class Arm::Right::Grip : private Arm {
 public:
   void open(void);
   void close(void);
+
+  GripHoldState hold(void);
 
 public:
   GripState state(void);

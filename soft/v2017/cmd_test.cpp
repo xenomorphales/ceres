@@ -58,6 +58,16 @@ int cmd_test_funny(int argc, char** argv) {
 }
 
 int cmd_test_grip(int argc, char** argv) {
+  if(argc == 2) {
+    if(strcmp(argv[1], "left") == 0) {
+      printf("%i\n", (int)Arm::instance().left().grip().hold());
+    }
+    if(strcmp(argv[1], "right") == 0) {
+      printf("%i\n", (int)Arm::instance().right().grip().hold());
+    }
+    return 0;
+  }
+
   if(argc != 3) {
     puts("ERROR");
     return -1;
