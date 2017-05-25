@@ -5,6 +5,7 @@
 static void _set(uint8_t id, uint16_t pos) {
   dynamixel_t dev;
   dynamixel_init(&dev, &ServoBus::instance().stream(), id);
+  dynamixel_write8(&dev, XL320_MAX_TORQUE, 100);
   dynamixel_write8(&dev, XL320_TORQUE_ENABLE, 1);
   dynamixel_write16(&dev, XL320_GOAL_POSITION, pos);
 }
