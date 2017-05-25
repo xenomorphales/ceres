@@ -15,8 +15,8 @@ void Arm::Left::Grip::open(void) {
 }
 
 void Arm::Left::Grip::close(void) {
-  _set(15, 330);
-  _set(16, 670);
+  _set(15, 250);
+  _set(16, 750);
 }
 
 void Arm::Right::Grip::open(void) {
@@ -25,6 +25,6 @@ void Arm::Right::Grip::open(void) {
 }
 
 void Arm::Right::Grip::close(void) {
-  _set(25, 330);
-  _set(26, 670);
+  _set(25, 250);
+  _set(26, 750);
 }
