@@ -21,13 +21,19 @@ public:
     END
   };
 
+  enum Side {
+    YELLOW,
+    BLUE
+  };
+
 protected:
   Phase _phase;
   Subphase _subphase;
+  Side _side;
 
 public:
   inline Match(void)
-    : _phase(INIT), _subphase(SAFE) {
+    : _phase(INIT), _subphase(SAFE), _side(BLUE) {
   }
 
 public:
@@ -37,6 +43,14 @@ public:
 
   inline Subphase subphase(void) {
     return _subphase;
+  }
+
+  inline Side side(void) {
+    return _side;
+  }
+
+  inline void setSide(Side s) {
+    _side = s;
   }
 
 public:

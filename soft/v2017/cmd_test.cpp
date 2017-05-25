@@ -7,6 +7,8 @@
 #include <funny.hpp>
 #include <arm.hpp>
 
+#include "match.hpp"
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -98,7 +100,6 @@ int cmd_test_grip(int argc, char** argv) {
   return 0;
 }
 
-
 int cmd_test_arm(int argc, char** argv) {
   if(argc == 4) {
     const int ia1 = atoi(argv[2]);
@@ -143,5 +144,34 @@ int cmd_test_arm(int argc, char** argv) {
   }
 
   puts("ERROR");
+  return 0;
+}
+
+int cmd_test_side(int argc, char** argv) {
+  if(argc == 1) {
+    if(Match::instance().side() == Match::YELLOW) {
+      puts("YELLOW");
+    }
+    else if(Match::instance().side() == Match::BLUE) {
+      puts("BLUE");
+    }
+  }
+
+  if(argc != 2) {
+    puts("ERROR");
+    return -1;
+  }
+
+  if(strcmp(argv[1], "yellow") == 0) {
+    Match::instance().setSide(Match::YELLOW);
+  }
+  else if(strcmp(argv[1], "blue") == 0) {
+    Match::instance().setSide(Match::BLUE);
+  }
+  else {
+    puts("ERROR");
+    return -1;
+  }
+
   return 0;
 }
