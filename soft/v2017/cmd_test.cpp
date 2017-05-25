@@ -87,3 +87,35 @@ int cmd_test_grip(int argc, char** argv) {
   puts("ERROR");
   return 0;
 }
+
+
+int cmd_test_arm(int argc, char** argv) {
+  if(argc != 3) {
+    puts("ERROR");
+    return -1;
+  }
+
+  if(strcmp(argv[1], "left") == 0) {
+    if(strcmp(argv[2], "deploy") == 0) {
+      Arm::instance().left().deploy();
+      return 0;
+    }
+    else if(strcmp(argv[2], "retract") == 0) {
+      Arm::instance().left().retract();
+      return 0;
+    }
+  }
+  else if(strcmp(argv[1], "right") == 0) {
+    if(strcmp(argv[2], "deploy") == 0) {
+      Arm::instance().right().deploy();
+      return 0;
+    }
+    else if(strcmp(argv[2], "retract") == 0) {
+      Arm::instance().right().retract();
+      return 0;
+    }
+  }
+
+  puts("ERROR");
+  return 0;
+}

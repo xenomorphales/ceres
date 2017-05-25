@@ -21,6 +21,7 @@ extern int cmd_test_all(int, char**);
 extern int cmd_test_speed(int argc, char** argv);
 extern int cmd_test_funny(int argc, char** argv);
 extern int cmd_test_grip(int argc, char** argv);
+extern int cmd_test_arm(int argc, char** argv);
 
 static const shell_command_t shell_commands[] = {
   { "read", "", cmd_read },
@@ -36,6 +37,8 @@ static const shell_command_t shell_commands[] = {
   { "test", "Test speed*time", cmd_test_speed},
   { "funny", "Test funny action", cmd_test_funny},
   { "grip", "Test grip", cmd_test_grip},
+  { "arm", "Test grip", cmd_test_arm},
+
   { NULL, NULL, NULL }
 };
 
