@@ -100,6 +100,22 @@ int cmd_test_grip(int argc, char** argv) {
 
 
 int cmd_test_arm(int argc, char** argv) {
+  if(argc == 4) {
+    const int ia1 = atoi(argv[2]);
+    const int ia2 = atoi(argv[3]);
+
+    const float a1 = ia1 / 1000.0;
+    const float a2 = ia2 / 1000.0;
+
+    if(strcmp(argv[1], "left") == 0) {
+      Arm::instance().left().setAngles(a1, a2);
+    }
+    if(strcmp(argv[1], "right") == 0) {
+      Arm::instance().right().setAngles(a1, a2);
+    }
+    return 0;
+  }
+
   if(argc != 3) {
     puts("ERROR");
     return -1;

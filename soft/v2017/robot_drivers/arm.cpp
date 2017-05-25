@@ -50,14 +50,19 @@ static uint8_t _right_ids[ARM_SERVO_NUMOF] = {
 static uint16_t _left_poses[3][ARM_SERVO_NUMOF] = {
   {170,  80, 540, 400, 200}, // RETRACTED
   {512, 512, 630, 270, 130}, // DEPLOYED_MIDDLE
-  {512, 512, 100, 270, 130}, // DEPLOYED_DOWN
+  {512, 512, 100, 700, 130}, // DEPLOYED_DOWN
 };
 
 static uint16_t _right_poses[3][ARM_SERVO_NUMOF] = {
   {140, 140, 540, 330, 180}, // RETRACTED
   {512, 512, 630, 270, 150}, // DEPLOYED_MIDDLE
-  {512, 512, 100, 270, 150}, // DEPLOYED_DOWN
+  {512, 512, 100, 700, 150}, // DEPLOYED_DOWN
 };
+
+static float _left_angles[ARM_SERVO_NUMOF] = { 0,0,0,0,0 };
+static float _right_angles[ARM_SERVO_NUMOF] = { 0,0,0,0,0 };
+
+static float _no_angles[ARM_SERVO_NUMOF] = { 0,0,0,0,0 };
 
 static state_t _left_state = STATE_OFF;
 static event_t _left_event = EVENT_EMPTY;
@@ -95,44 +100,56 @@ void _arm_enable(uint8_t ids[ARM_SERVO_NUMOF]) {
   }
 }
 
-void _arm_set_pose(uint8_t ids[ARM_SERVO_NUMOF], uint16_t pose[ARM_SERVO_NUMOF]) {
+uint16_t add_angle(uint16_t pose, float angle) {
+  const int p = pose;
+  const int a = angle * 1024 / 3.1415;
+
+  const int ret = p+a;
+
+  if(ret < 0) return 0;
+  if(ret > 1024) return 1024;
+
+  return ret;
+}
+
+void _arm_set_pose(uint8_t ids[ARM_SERVO_NUMOF], uint16_t pose[ARM_SERVO_NUMOF], float angle[ARM_SERVO_NUMOF]) {
   for(size_t i = 0 ; i < ARM_SERVO_NUMOF ; i++) {
-    _servo_set_angle(ids[i], pose[i]);
+    _servo_set_angle(ids[i], add_angle(pose[i], angle[i]));
   }
 }
 
-bool _arm_check_pose(uint8_t ids[ARM_SERVO_NUMOF], uint16_t pose[ARM_SERVO_NUMOF]) {
+bool _arm_check_pose(uint8_t ids[ARM_SERVO_NUMOF], uint16_t pose[ARM_SERVO_NUMOF], float angle[ARM_SERVO_NUMOF]) {
   for(size_t i = 0 ; i < ARM_SERVO_NUMOF ; i++) {
-    if(!_servo_check_angle(ids[i], pose[i])) {
+    if(!_servo_check_angle(ids[i], add_angle(pose[i], angle[i]))) {
       return false;
     }
   }
   return true;
 }
 
-static inline event_t _update_event(uint8_t ids[ARM_SERVO_NUMOF], uint16_t poses[3][ARM_SERVO_NUMOF], state_t state) {
+static inline event_t _update_event(uint8_t ids[ARM_SERVO_NUMOF], uint16_t poses[3][ARM_SERVO_NUMOF], float angle[ARM_SERVO_NUMOF], state_t state) {
   if(state == STATE_OFF) {
   }
   else if(state == STATE_INIT) {
     return EVENT_DONE;
   }
   else if(state == STATE_MOVING_DEPLOY_1) {
-    if(_arm_check_pose(ids, poses[DEPLOYED_MIDDLE])) {
+    if(_arm_check_pose(ids, poses[DEPLOYED_MIDDLE], _no_angles)) {
       return EVENT_DONE;
     }
   }
   else if(state == STATE_MOVING_DEPLOY_2) {
-    if(_arm_check_pose(ids, poses[DEPLOYED_DOWN])) {
+    if(_arm_check_pose(ids, poses[DEPLOYED_DOWN], angle)) {
       return EVENT_DONE;
     }
   }
   else if(state == STATE_MOVING_RETRACT_1) {
-    if(_arm_check_pose(ids, poses[DEPLOYED_MIDDLE])) {
+    if(_arm_check_pose(ids, poses[DEPLOYED_MIDDLE], _no_angles)) {
       return EVENT_DONE;
     }
   }
   else if(state == STATE_MOVING_RETRACT_2) {
-    if(_arm_check_pose(ids, poses[RETRACTED])) {
+    if(_arm_check_pose(ids, poses[RETRACTED], _no_angles)) {
       return EVENT_DONE;
     }
   }
@@ -140,7 +157,7 @@ static inline event_t _update_event(uint8_t ids[ARM_SERVO_NUMOF], uint16_t poses
   return EVENT_EMPTY;
 }
 
-static inline state_t _update_state(uint8_t ids[ARM_SERVO_NUMOF], uint16_t poses[3][ARM_SERVO_NUMOF], state_t state, event_t event) {
+static inline state_t _update_state(uint8_t ids[ARM_SERVO_NUMOF], uint16_t poses[3][ARM_SERVO_NUMOF], float angle[ARM_SERVO_NUMOF], state_t state, event_t event) {
   if(state == STATE_OFF) {
     if(event == EVENT_INIT) {
       _arm_enable(ids);
@@ -149,25 +166,29 @@ static inline state_t _update_state(uint8_t ids[ARM_SERVO_NUMOF], uint16_t poses
   }
   else if(state == STATE_INIT) {
     if(event == EVENT_DONE) {
-      _arm_set_pose(ids, poses[DEPLOYED_MIDDLE]);
+      _arm_set_pose(ids, poses[DEPLOYED_MIDDLE], _no_angles);
       return STATE_MOVING_RETRACT_1;
     }
   }
   else if(state == STATE_RETRACTED) {
     if(event == EVENT_DEPLOY) {
-      _arm_set_pose(ids, poses[DEPLOYED_MIDDLE]);
+      _arm_set_pose(ids, poses[DEPLOYED_MIDDLE], _no_angles);
       return STATE_MOVING_DEPLOY_1;
     }
   }
   else if(state == STATE_DEPLOYED) {
     if(event == EVENT_RETRACT) {
-      _arm_set_pose(ids, poses[DEPLOYED_MIDDLE]);
+      _arm_set_pose(ids, poses[DEPLOYED_MIDDLE], _no_angles);
       return STATE_MOVING_RETRACT_1;
+    }
+    if(event == EVENT_DEPLOY) {
+      _arm_set_pose(ids, poses[DEPLOYED_DOWN], angle);
+      return STATE_DEPLOYED;
     }
   }
   else if(state == STATE_MOVING_DEPLOY_1) {
     if(event == EVENT_DONE) {
-      _arm_set_pose(ids, poses[DEPLOYED_DOWN]);
+      _arm_set_pose(ids, poses[DEPLOYED_DOWN], angle);
       return STATE_MOVING_DEPLOY_2;
     }
   }
@@ -178,7 +199,7 @@ static inline state_t _update_state(uint8_t ids[ARM_SERVO_NUMOF], uint16_t poses
   }
   else if(state == STATE_MOVING_RETRACT_1) {
     if(event == EVENT_DONE) {
-      _arm_set_pose(ids, poses[RETRACTED]);
+      _arm_set_pose(ids, poses[RETRACTED], _no_angles);
       return STATE_MOVING_RETRACT_2;
     }
   }
@@ -221,18 +242,18 @@ static void* _arm_update_thread(void* arg) {
     if(Arm::instance().state() == Service::RUN) {
       // LEFT
       if(_left_event == EVENT_EMPTY) {
-        _left_event = _update_event(_left_ids, _left_poses, _left_state);
+        _left_event = _update_event(_left_ids, _left_poses, _left_angles, _left_state);
       }
 
-      _left_state = _update_state(_left_ids, _left_poses, _left_state, _left_event);
+      _left_state = _update_state(_left_ids, _left_poses, _left_angles, _left_state, _left_event);
       _left_event = EVENT_EMPTY;
 
       // RIGHT
       if(_right_event == EVENT_EMPTY) {
-        _right_event = _update_event(_right_ids, _right_poses, _right_state);
+        _right_event = _update_event(_right_ids, _right_poses, _right_angles, _right_state);
       }
 
-      _right_state = _update_state(_right_ids, _right_poses, _right_state, _right_event);
+      _right_state = _update_state(_right_ids, _right_poses, _right_angles, _right_state, _right_event);
       _right_event = EVENT_EMPTY;
     }
   }
@@ -272,3 +293,14 @@ void Arm::Right::retract(void) {
 Arm::ArmState Arm::Right::state(void) {
   return _arm_state(_right_state);
 }
+
+void Arm::Left::setAngles(float a1, float a2) {
+  _left_angles[0] = a1;
+  _left_angles[3] = a2;
+}
+
+void Arm::Right::setAngles(float a1, float a2) {
+  _right_angles[0] = a1;
+  _right_angles[3] = a2;
+}
+
