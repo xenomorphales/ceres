@@ -20,6 +20,7 @@ extern int cmd_dxl(int argc, char **argv);
 extern int cmd_test_all(int, char**);
 extern int cmd_test_speed(int argc, char** argv);
 extern int cmd_test_funny(int argc, char** argv);
+extern int cmd_test_grip(int argc, char** argv);
 
 static const shell_command_t shell_commands[] = {
   { "read", "", cmd_read },
@@ -34,6 +35,7 @@ static const shell_command_t shell_commands[] = {
   { "init_all", "Init all services", cmd_test_all},
   { "test", "Test speed*time", cmd_test_speed},
   { "funny", "Test funny action", cmd_test_funny},
+  { "grip", "Test grip", cmd_test_grip},
   { NULL, NULL, NULL }
 };
 

@@ -5,6 +5,11 @@
 #include <robot.hpp>
 #include <locator.hpp>
 #include <funny.hpp>
+#include <arm.hpp>
+
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 int cmd_test_all(int, char**) {
   Motors::instance().start();
@@ -49,5 +54,36 @@ int cmd_test_funny(int argc, char** argv) {
   Funny::instance().release();
   xtimer_sleep(1);
   Funny::instance().disable();
+  return 0;
+}
+
+int cmd_test_grip(int argc, char** argv) {
+  if(argc != 3) {
+    puts("ERROR");
+    return -1;
+  }
+
+  if(strcmp(argv[1], "left") == 0) {
+    if(strcmp(argv[2], "open") == 0) {
+      Arm::instance().left().grip().open();
+      return 0;
+    }
+    else if(strcmp(argv[2], "close") == 0) {
+      Arm::instance().left().grip().close();
+      return 0;
+    }
+  }
+  else if(strcmp(argv[1], "right") == 0) {
+    if(strcmp(argv[2], "open") == 0) {
+      Arm::instance().right().grip().open();
+      return 0;
+    }
+    else if(strcmp(argv[2], "close") == 0) {
+      Arm::instance().right().grip().close();
+      return 0;
+    }
+  }
+
+  puts("ERROR");
   return 0;
 }
