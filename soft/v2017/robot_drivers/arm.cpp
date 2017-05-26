@@ -82,6 +82,8 @@ void _servo_enable(uint8_t id) {
 void _servo_set_angle(uint8_t id, uint16_t angle) {
   feetech_t dev;
   feetech_init(&dev, &ServoBus::instance().stream(), id);
+  feetech_write8(&dev, SCS15_TORQUE_ENABLE, 1);
+  feetech_write16(&dev, SCS15_GOAL_TIME, 512);
   feetech_write16(&dev, SCS15_GOAL_POSITION, angle);
 }
 

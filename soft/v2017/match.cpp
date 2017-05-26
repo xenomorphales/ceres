@@ -33,7 +33,7 @@ void Match::Updater::update(void) {
       _subphase = END;
       return;
     }
-    if(xtimer_now_usec64() - _begin > SEC(20)) {
+    if(xtimer_now_usec64() - _begin > SEC(15)) {
       _subphase = SAFE;
       return;
     }

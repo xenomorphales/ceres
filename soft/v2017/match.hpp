@@ -33,7 +33,7 @@ protected:
 
 public:
   inline Match(void)
-    : _phase(INIT), _subphase(SAFE), _side(BLUE) {
+    : _phase(INIT), _subphase(SAFE), _side(YELLOW) {
   }
 
 public:
